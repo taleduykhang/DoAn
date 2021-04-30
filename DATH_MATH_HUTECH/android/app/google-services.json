@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "700284807195",
+    "project_id": "mathhutech",
+    "storage_bucket": "mathhutech.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700284807195:android:6f67bd432881d412a330be",
+        "android_client_info": {
+          "package_name": "com.dath_math_hutech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700284807195-k1crqdmnpbthkoteicd072vp2apfdef8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYdP6ePmH2-xy-ID_T1o2eNXN6Mx-1zUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700284807195-k1crqdmnpbthkoteicd072vp2apfdef8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
