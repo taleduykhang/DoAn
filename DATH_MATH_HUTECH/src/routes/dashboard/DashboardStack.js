@@ -29,9 +29,10 @@ export default DashboardStack = () => {
         },
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
       }}>
+      
       <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
-      <Stack.Screen name="DashboardDetail" component={DashboardDetail} />
       <Stack.Screen name="AnalyticsScreen" component={AnalyticsScreen} />
+      <Stack.Screen name="DashboardDetail" component={DashboardDetail} />     
       <Stack.Screen name="LinearAlgebraScreen" component={LinearAlgebraScreen} />
       <Stack.Screen name="DiscreteMathScreen" component={DiscreteMathScreen} />
       <Stack.Screen name="SettingScreen" component={SettingScreen} />

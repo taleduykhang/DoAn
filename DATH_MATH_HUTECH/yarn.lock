@@ -2289,6 +2289,11 @@
   "resolved" "https://registry.npmjs.org/complex.js/-/complex.js-2.0.12.tgz"
   "version" "2.0.12"
 
+"complex.js@2.0.1":
+  "integrity" "sha1-6pDHoFrs6vOjdtLA9qeEIXJ9aHk="
+  "resolved" "https://registry.npmjs.org/complex.js/-/complex.js-2.0.1.tgz"
+  "version" "2.0.1"
+
 "component-emitter@^1.2.1":
   "integrity" "sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg=="
   "resolved" "https://registry.npmjs.org/component-emitter/-/component-emitter-1.3.0.tgz"
@@ -2500,6 +2505,11 @@
   "integrity" "sha512-KaL7+6Fw6i5A2XSnsbhm/6B+NuEA7TZ4vqxnd5tXz9sbKtrN9Srj8ab4vKVdK8YAqZO9P1kg45Y6YLoduPf+kw=="
   "resolved" "https://registry.npmjs.org/decimal.js/-/decimal.js-10.2.1.tgz"
   "version" "10.2.1"
+
+"decimal.js@7.1.1":
+  "integrity" "sha1-GtytfXDXqRxCbXVvHrZWbDvmy88="
+  "resolved" "https://registry.npmjs.org/decimal.js/-/decimal.js-7.1.1.tgz"
+  "version" "7.1.1"
 
 "decode-uri-component@^0.2.0":
   "integrity" "sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU="
@@ -3317,6 +3327,11 @@
   "integrity" "sha512-E1fz2Xs9ltlUp+qbiyx9wmt2n9dRzPsS11Jtdb8D2o+cC7wr9xkkKsVKJuBX0ST+LVS+LhLO+SbLJNtfWcJvXA=="
   "resolved" "https://registry.npmjs.org/fraction.js/-/fraction.js-4.0.13.tgz"
   "version" "4.0.13"
+
+"fraction.js@4.0.0":
+  "integrity" "sha1-c5dOL4tR73CVNtYkzJB4Liu2EnQ="
+  "resolved" "https://registry.npmjs.org/fraction.js/-/fraction.js-4.0.0.tgz"
+  "version" "4.0.0"
 
 "fragment-cache@^0.2.1":
   "integrity" "sha1-QpD60n8T6Jvn8zeZxrxaCr//DRk="
@@ -4892,6 +4907,25 @@
     "tiny-emitter" "^2.1.0"
     "typed-function" "^2.0.0"
 
+"mathjs@3.11.2":
+  "integrity" "sha1-0spyPX6SVMxY0UIaWmHYz6yP9kI="
+  "resolved" "https://registry.npmjs.org/mathjs/-/mathjs-3.11.2.tgz"
+  "version" "3.11.2"
+  dependencies:
+    "complex.js" "2.0.1"
+    "decimal.js" "7.1.1"
+    "fraction.js" "4.0.0"
+    "seed-random" "2.2.0"
+    "tiny-emitter" "1.0.2"
+    "typed-function" "0.10.5"
+
+"mathsteps@^0.2.0":
+  "integrity" "sha512-x/BBVJ7n+RsUj4EOcKuCBCvrQWWvP8i6v5x8nr73qYU8yph6LZWT1ELPKnnUDEEqxe6lrncQB7HacknStMJJ5g=="
+  "resolved" "https://registry.npmjs.org/mathsteps/-/mathsteps-0.2.0.tgz"
+  "version" "0.2.0"
+  dependencies:
+    "mathjs" "3.11.2"
+
 "merge-stream@^1.0.1":
   "integrity" "sha1-QEEgLVCKNCugAXQAjfDCUbjBNeE="
   "resolved" "https://registry.npmjs.org/merge-stream/-/merge-stream-1.0.1.tgz"
@@ -5892,6 +5926,13 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
+"react-native-animatable@1.3.3":
+  "integrity" "sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w=="
+  "resolved" "https://registry.npmjs.org/react-native-animatable/-/react-native-animatable-1.3.3.tgz"
+  "version" "1.3.3"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-native-gesture-handler@*", "react-native-gesture-handler@^1.10.3", "react-native-gesture-handler@>= 1.0.0":
   "integrity" "sha512-cBGMi1IEsIVMgoox4RvMx7V2r6bNKw0uR1Mu1o7NbuHS6BRSVLq0dP34l2ecnPlC+jpWd3le6Yg1nrdCjby2Mw=="
   "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-1.10.3.tgz"
@@ -5912,6 +5953,14 @@
   "integrity" "sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg=="
   "resolved" "https://registry.npmjs.org/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz"
   "version" "1.3.1"
+
+"react-native-modal@^11.10.0":
+  "integrity" "sha512-syRYDJYSh16bR37R5EKU9T/wC+5bEOfF17IUqf5URdhbEDd+hxyMInC++l45E8oI+MtdOaEp9yAws5xDqk8dnA=="
+  "resolved" "https://registry.npmjs.org/react-native-modal/-/react-native-modal-11.10.0.tgz"
+  "version" "11.10.0"
+  dependencies:
+    "prop-types" "^15.6.2"
+    "react-native-animatable" "1.3.3"
 
 "react-native-reanimated@^2.1.0", "react-native-reanimated@>= 1.0.0":
   "integrity" "sha512-tlPvvcdf+X7HGQ7g/7npBFhwMznfdk7MHUc9gUB/kp2abSscXNe/kOVKlrNEOO4DS11rNOXc+llFxVFMuNk0zA=="
@@ -6378,6 +6427,11 @@
   dependencies:
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.1"
+
+"seed-random@2.2.0":
+  "integrity" "sha1-KpsZ4lCoFwmSMaW5mk2vgLf77VQ="
+  "resolved" "https://registry.npmjs.org/seed-random/-/seed-random-2.2.0.tgz"
+  "version" "2.2.0"
 
 "seedrandom@^3.0.5":
   "integrity" "sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg=="
@@ -7009,6 +7063,11 @@
   "resolved" "https://registry.npmjs.org/tiny-emitter/-/tiny-emitter-2.1.0.tgz"
   "version" "2.1.0"
 
+"tiny-emitter@1.0.2":
+  "integrity" "sha1-jklHDT9V+J4kchA2imu5+1GqFgE="
+  "resolved" "https://registry.npmjs.org/tiny-emitter/-/tiny-emitter-1.0.2.tgz"
+  "version" "1.0.2"
+
 "tmp@^0.0.33":
   "integrity" "sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw=="
   "resolved" "https://registry.npmjs.org/tmp/-/tmp-0.0.33.tgz"
@@ -7147,6 +7206,11 @@
   "integrity" "sha512-Hhy1Iwo/e4AtLZNK10ewVVcP2UEs408DS35ubP825w/YgSBK1KVLwALvvIG4yX75QJrxjCpcWkzkVRB0BwwYlA=="
   "resolved" "https://registry.npmjs.org/typed-function/-/typed-function-2.0.0.tgz"
   "version" "2.0.0"
+
+"typed-function@0.10.5":
+  "integrity" "sha1-Lg8Yq9BlIZ+raUpEamXG0ZgYMsA="
+  "resolved" "https://registry.npmjs.org/typed-function/-/typed-function-0.10.5.tgz"
+  "version" "0.10.5"
 
 "typedarray-to-buffer@^3.1.5":
   "integrity" "sha512-zdu8XMNEDepKKR+XYOXAVPtWui0ly0NtohUscw+UmaHiAWT8hrV1rr//H6V+0DvJ3OQ19S979M0laLfX8rm82Q=="
