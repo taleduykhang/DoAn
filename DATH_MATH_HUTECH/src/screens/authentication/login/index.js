@@ -4,25 +4,25 @@ import {withGlobalContext} from '../../../GlobalContextProvider';
 
 class LoginScreen extends React.Component {
   componentDidUpdate(prevProps) {
-    if (
-      this.props.global.isSignin !== prevProps.global.isSignin &&
-      this.props.global.isSignin
-    ) {
-      this.props.navigation.navigate('DrawerNavigation', {
-        screen: 'BottomTab',
-        params: {
-          screen: 'DashboardStack',
-          params: {
-            screen: 'DashboardScreen',
-            params: {
-              title: 'Dashboard',
-              userName: '123',
-              url: 'https://abc',
-            },
-          },
-        },
-      });
-    }
+    // if (
+    //   this.props.global.isSignin !== prevProps.global.isSignin &&
+    //   this.props.global.isSignin
+    // ) {
+    //   this.props.navigation.navigate('DrawerNavigation', {
+    //     screen: 'BottomTab',
+    //     params: {
+    //       screen: 'DashboardStack',
+    //       params: {
+    //         screen: 'DashboardScreen',
+    //         params: {
+    //           title: 'Dashboard',
+    //           userName: '123',
+    //           url: 'https://abc',
+    //         },
+    //       },
+    //     },
+    //   });
+    // }
   }
 
   onPressLogin = () => {

@@ -1,6 +1,7 @@
 import React from 'react';
-import {View,Image} from 'react-native';
-
+import {View,Image, Dimensions} from 'react-native';
+const {width: WIDTH} = Dimensions.get('window');
+const {height: HEIGHT} = Dimensions.get('window');
 export default class DrawerHeader extends React.PureComponent {
   render() {
     return (
@@ -9,13 +10,14 @@ export default class DrawerHeader extends React.PureComponent {
           flex: 2,
           borderBottomWidth: 1,
           borderBottomColor: '#E5E5E5',
-          alignItems: 'center'
+          alignItems: 'center',
         }}>
         <Image
           source={require('../../../resource/images/LogoHutech.png')}
           style={{
-            width: 160,
-            height: 120,
+            marginTop:0,
+            width: WIDTH-200,
+            height: HEIGHT-640,
           }}
         />
       </View>
