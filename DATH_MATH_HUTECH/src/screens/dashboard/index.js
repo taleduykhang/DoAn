@@ -24,7 +24,7 @@ import {
 
 import {IconCamera,IconGallery,IconEqual} from '../../resource/icons';
 import Modal from 'react-native-modal';
-// import MathText from 'react-native-math';
+import MathJax from 'react-native-mathjax'
 // export default function DashboardScreen() {
 //   const [image, setImage] = useState();
 //   const [text, setText] = useState({});
@@ -89,7 +89,8 @@ export default class DashboardScreen extends React.Component {
       result: 0,
       text:undefined,
       kq:undefined,
-      modalVisible: false
+      modalVisible: false,
+      test:undefined
     };
   }
   // Thay đổi trạng thái ô phép toán
@@ -118,11 +119,39 @@ export default class DashboardScreen extends React.Component {
       //   console.log("after change: " + step.newNode.toString());    // after change: 6 x
       //   console.log("# of substeps: " + step.substeps.length);      // # of substeps: 3
       // });
-      const a = derivative(this.state.text, 'x');
-      this.setState({kq:a.toString()}) 
-      this.setState({
-        modalVisible: !this.state.modalVisible,
-      });
+      // var splitArray= new Array();
+      // var format = /[/]/;
+      // var regex=/[- + * /]/;
+
+      // if(format.test(this.state.text)==true){ 
+      //   console.log(this.state.text.indexOf('/'));
+      //   console.log(this.state.text.split('/').pop());
+      //   console.log(this.state.text.indexOf('/'));
+      //   console.log(this.state.text.slice(0,this.state.text.indexOf('/')-1)+"//frac"+"{"+this.state.text.slice(this.state.text.indexOf('/')-1,this.state.text.indexOf('/'))+"}{"+this.state.text.slice(this.state.text.indexOf('/')+1)+"}");
+      //   console.log(this.state.text.charAt(this.state.text.indexOf('/')));
+      //   //---------Tách chuỗi---------
+      //   // splitArray=this.state.text.split(regex);
+      //   // for(var i=0;i<splitArray.length;i++){
+      //   //   console.log(splitArray[i]);
+      //   // }
+      // }
+      // else{
+      //   const a = derivative(this.state.text, 'x');
+      //   this.setState({kq:a.toString()}) 
+      //   this.setState({
+      //     modalVisible: !this.state.modalVisible,
+      //     test:this.state.text.slice(0,this.state.text.indexOf('/')-1)+"//frac"+"{"+this.state.text.slice(this.state.text.indexOf('/')-1,this.state.text.indexOf('/'))+"}{"+this.state.text.slice(this.state.text.indexOf('/')+1)+"}"
+      //   });
+      // }
+      const a = derivative(this.state.text,'x');
+        this.setState({
+          modalVisible: !this.state.modalVisible,
+          kq:a.toString(),
+          // test:this.state.text.slice(0,this.state.text.indexOf('/')-1)+"\\frac"+"{"+this.state.text.slice(this.state.text.indexOf('/')-1,this.state.text.indexOf('/'))+"}{"+this.state.text.slice(this.state.text.indexOf('/')+1)+"}"
+        });
+        this.setState({
+          test:this.state.kq.slice(0,this.state.kq.indexOf('/')-1)+"\\frac"+"{"+this.state.kq.slice(this.state.kq.indexOf('/')-1,this.state.kq.indexOf('/'))+"}{"+this.state.kq.slice(this.state.kq.indexOf('/')+1)+"}"
+        });
     }
     
   }
@@ -135,9 +164,10 @@ export default class DashboardScreen extends React.Component {
       const result = await ml().cloudDocumentTextRecognizerProcessImage(
         media.uri,
       );
+     
       this.setState({
         result: result.text,
-        text: result.text
+        text: result.text.toLowerCase().trim()
       });
     }
   };
@@ -197,11 +227,29 @@ export default class DashboardScreen extends React.Component {
               <Text style={{fontSize: 18,marginLeft: 20}}> f(x) = {this.state.text}</Text>
               <Text style={{fontSize: 20}}>Kết quả</Text>
               <Text style={{fontSize: 18,marginLeft: 20}}> f'(x) = {this.state.kq}</Text>
+              <MathJax
+                // HTML content with MathJax support
+                html={"$"+this.state.test+"$"}
+                // MathJax config option
+                mathJaxOptions={{
+                  messageStyle: 'none',
+                  extensions: [ 'tex2jax.js' ],
+                  jax: [ 'input/TeX', 'output/HTML-CSS' ],
+                  tex2jax: {
+                    inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+                    displayMath: [ ['$$','$$'], ['\\[','\\]'] ],
+                    processEscapes: true,
+                  },
+                  TeX: {
+                    extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js']
+                  }
+                }}
+              />
             </View>
           </Modal>
           <View style={{marginTop: 30}}>
             <Text>Bàn phím</Text>
-            {/* <MathText value={this.state.kq}></MathText> */}
+            
           </View>
         </ScrollView>
       );
