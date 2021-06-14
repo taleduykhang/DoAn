@@ -184,6 +184,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
+
+    implementation 'com.caverock:androidsvg-aar:1.4'
+
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
@@ -221,3 +224,5 @@ apply from: file("../../node_modules/@react-native-community/cli-platform-androi
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+// compile project(':react-native-react-native-latex')
+
