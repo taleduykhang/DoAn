@@ -1,23 +1,23 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet,Image} from 'react-native';
 import {withNavigation} from '@react-navigation/compat';
 import {IconMath3, IconMath4,IconMath1,IconMath2} from '../../../resource/icons';
-
+import MathView, { MathText } from 'react-native-math-view';
 class DrawerBody extends React.PureComponent {
   onGoToDashboard = () => {
     this.props.navigation.navigate('DashboardScreen', {
-      title: 'Giải toán',
+      title: 'Tích phân',
     });
   };
 
   onGoToAnalytics = () => {
     this.props.navigation.navigate('AnalyticsScreen', {
-      title: 'Giải tích 1',
+      title: 'Đạo hàm',
     });
   };
   onGoToLinearAlgebra = () => {
     this.props.navigation.navigate('LinearAlgebraScreen', {
-      title: 'Đại số tuyến tính',
+      title: 'Giới hạn',
     });
   };
   onGoToDiscreteMath = () => {
@@ -31,29 +31,32 @@ class DrawerBody extends React.PureComponent {
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToDashboard}>
-          <Text style={styles.itemText}>
-            <IconMath1 size={16} color={'red'}/> Giải toán
-          </Text>
+          <Image source={require('../../../resource/images/integral2.png')}/>
+          <Text style={{marginLeft: 10,paddingVertical:15}}>Tích phân</Text>
         </TouchableOpacity>
+        <View style={{height:1,backgroundColor:'gray'}}></View>
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToAnalytics}>
-          <Text style={styles.itemText}>
-            <IconMath2 size={16} color={'blue'} />  Giải tích 1
-          </Text>
+          <MathText
+            value={'$\\frac{d}{dx} $ Đạo hàm'}
+            direction="ltr"
+          />
         </TouchableOpacity>
+        
+        <View style={{height:1,backgroundColor:'gray'}}></View>
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToLinearAlgebra}>
-          <Text style={styles.itemText}>
-            <IconMath4 size={16} /> Đại số tuyến tính
-          </Text>
+          <Image source={require('../../../resource/images/lim.png')}/>
+          <Text style={{marginLeft: 10,paddingVertical:15}}>Giới hạn</Text>
         </TouchableOpacity>
+        <View style={{height:1,backgroundColor:'gray'}}></View>
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToDiscreteMath}>
           <Text style={styles.itemText}>
-            <IconMath3 size={16} />  Toán rời rạc
+            <IconMath3 size={16} /> 
           </Text>
         </TouchableOpacity>
       </View>
@@ -74,6 +77,8 @@ const styles = StyleSheet.create({
   itemContainer: {
     paddingHorizontal: 10,
     paddingVertical: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   itemText: {
     fontSize: 16,

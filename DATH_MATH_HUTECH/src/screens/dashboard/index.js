@@ -42,6 +42,7 @@ export default function DashboardScreen() {
   const [ketQua, setKetQua] = useState('');
   const [buoc, setBuoc] = useState(0);
   const [baiToan, setBaiToan] = useState('');
+  const [test, setTest] = useState('');
   const onTakePhoto = () => launchCamera({mediaType: 'image'}, onMediaSelect);
   const onChangeText = (text) => {
     setBaiToan(text);
@@ -104,43 +105,38 @@ export default function DashboardScreen() {
   const onPressModal = () => {
     setVisible(!visible)
   }
-  
+  const onPressMu2=()=> {
+    setTest(test+'^{2}');
+  }
+  const onPressX=()=> {
+    setTest(test+'x');
+  }
+  const onPress3=()=> {
+    setTest(test+'3');
+  }
     const _renderItem = ({item}) => {
-      // for(let i=1;i<=steps.length;i++) {
-      //   setBuoc(i++)
-      // }
         return (
           <View style={{flex:1,marginTop: 30}}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 13}}>Bước {buoc}:</Text>
-              {/* <MathView math={item.step}/>  */}
-              {/* <Text style={{fontSize: 13}}>{item.step}</Text> */}
-              <MathText
-                value={item.step}
-                direction="ltr"
-              />
+            <View style={{flexDirection: 'row',paddingHorizontal:15}}>
+              <Text style={{fontSize: 13}}>Bước {buoc}: </Text>
             </View>
+            <View style={{paddingHorizontal:15}}>
+                <MathText
+                  value={item.step}
+                  direction="ltr"
+                />
+              </View>
+            <View style={{alignItems: 'center'}}>
             <MathText
                 value={item.expression}
                 direction="ltr"
               />
-            {/* <Text style={{fontSize: 13}}>{item.expression}</Text> */}
-            
+            </View>
+            <View style={{backgroundColor:'gray',height:1}}>
+            </View>
           </View>
-          // console.log(item.expression)
         )
-
       }
-      
-   
-  
- 
-      
-    
-    
-
-    
-    
 
   return (
     <ScrollView contentContainerStyle={styles.screen}>
@@ -157,9 +153,8 @@ export default function DashboardScreen() {
             <IconGallery size={90} color={'#9999ff'}/>
           </TouchableOpacity>
         </View>
-        {/* <TextInput value={text} style={styles.input} onChangeText={onChangeText} placeholder={'Nhập phép toán'}></TextInput> */}
         <View style={{flexDirection: 'row',marginTop: 30}}>
-          <TextInput value={baiToan}  style={styles.input} onChangeText={onChangeText}></TextInput>
+          <TextInput value={baiToan}  style={styles.input} onChangeText={onChangeText} placeholder={'Nhập phép toán tích phân'}></TextInput>
             <TouchableOpacity style = {styles.buttonResult} onPress={onPressMath}>
               <IconEqual size={30} color={'#ff7733'}/>
             </TouchableOpacity>
@@ -170,46 +165,46 @@ export default function DashboardScreen() {
           style={styles.image}
         /> */}
       </View>
-      {/* <MathText
-            value={'$\\int{7x+8}dx$'}
+      <View style={{marginTop: 30,flexDirection: 'row',justifyContent:'space-between',width:'100%',paddingHorizontal:20}}>
+        <Text style={{fontSize: 13, marginTop: 15}} >{ketQua? 'Kết quả: ': ''}</Text>
+        <View style={{backgroundColor:'red'}}>
+          <MathText
+              value={ketQua}
+              direction="ltr"
+            />
+        </View>
+        <TouchableOpacity disabled={ketQua?false:true} onPress={onPressModal}>
+            <Text style={{fontSize: 13, color: 'blue',marginTop: 15}}>{ketQua?'Xem các bước giải':''}</Text>
+        </TouchableOpacity>
+      </View>
+      <MathText
+            value={'$\\int{'+test+'}dx$'}
             direction="ltr"
-          /> */}
-      <View style={{marginTop: 30,flexDirection: 'row',justifyContent:'space-between'}}>
-        <Text style={{fontSize: 13}} >{ketQua? 'Kết quả: ': ''}</Text>
-        
-        {/* <Latex>{ketQua}</Latex> */}
-        {/* <MathView math={ketQua}/>  */}
+      />
+      <TouchableOpacity onPress={onPressMu2} style={{borderWidth:1,width:60,alignItems: 'center'}}>
         <MathText
-            value={ketQua}
+            value={'$x^2$'}
             direction="ltr"
           />
-        <TouchableOpacity disabled={ketQua?false:true} onPress={onPressModal}>
-            <Text style={{fontSize: 13, color: 'blue'}}>{ketQua?'Xem các bước giải':''}</Text>
-        </TouchableOpacity>
-        {/* <StaticMathField>{'\\frac{1}{\\sqrt{2}}\\cdot 2'}</StaticMathField> */}
-        {/* <Latex>{ketQua}</Latex> */}
-        
-        {/* <MathJax
-          html={'$$\\sum_{i=0}^n i^2 = \\frac{(n^2+n)(2n+1)}{6}$$<br>$\\sqrt{i=3}$'}
-          mathJaxOptions={{
-            messageStyle: 'none',
-            extensions: ['tex2jax.js'],
-            jax: ['input/TeX', 'output/HTML-CSS'],
-            tex2jax: {
-              inlineMath: [['$', '$'], ['\\(', '\\)']],
-              displayMath: [['$$', '$$'], ['\\[', '\\]']],
-              processEscapes: true,
-            },
-            TeX: {
-              extensions: ['AMSmath.js', 'AMSsymbols.js', 'noErrors.js', 'noUndefined.js']
-            }
-          }}      
-        /> */}
-      </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onPressX} style={{borderWidth:1}}>
+        <MathText
+            value={'$x$'}
+            direction="ltr"
+          />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onPress3} style={{borderWidth:1}}>
+        <MathText
+            value={'$3$'}
+            direction="ltr"
+          />
+      </TouchableOpacity>
       
       <Modal visible={visible} onBackdropPress={onPressModal}>
         <View style={styles.modalView}>
-          <Text style={{fontSize: 13, color: 'blue'}}>Các bước giải</Text>
+          <View style={{alignItems: 'center',backgroundColor:'blue',height:'10%',justifyContent: 'center', borderTopStartRadius:20, borderTopEndRadius:20}}>
+            <Text style={{fontSize: 26, color: 'white'}}>Các bước giải</Text>
+          </View>
           <FlatList
             data={steps}
             renderItem={_renderItem}
@@ -223,132 +218,7 @@ export default function DashboardScreen() {
 }
 
 
-// export default class DashboardScreen extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       image:undefined,
-//       result: 0,
-//       text:undefined,
-//       kq:undefined,
-//       modalVisible: false
-//     };
-//   }
-//   // Thay đổi trạng thái ô phép toán
-//   onChangeText = (text) => {
-//     this.setState({text: text});
-//   };
-//   // Mở camera
-//   onTakePhoto = () => {
-//     launchCamera({mediaType: 'image'}, this.onMediaSelect);
-//   }
-//   // Mở thư viện ảnh
-//   onSelectImagePress = () =>{
-//     launchImageLibrary({mediaType: 'image'}, this.onMediaSelect);
-//   }
-//   // Thực hiện phép toán đạo hàm
-//   onPressMath=()=>{
-//     if(this.state.text==""||this.state.text==undefined)
-//     {
-//       Alert.alert("Bạn phải nhập phép toán");
-//     }
-//     else{
-//       // const steps = mathsteps.simplifyExpression('2x + 2x + x + x');
-//       // steps.forEach(step => {
-//       //   console.log("before change: " + step.oldNode.toString());   // before change: 2 x + 2 x + x + x
-//       //   console.log("change: " + step.changeType);                  // change: ADD_POLYNOMIAL_TERMS
-//       //   console.log("after change: " + step.newNode.toString());    // after change: 6 x
-//       //   console.log("# of substeps: " + step.substeps.length);      // # of substeps: 3
-//       // });
-//       const a = derivative(this.state.text, 'x');
-//       this.setState({kq:a.toString()}) 
-//       this.setState({
-//         modalVisible: !this.state.modalVisible,
-//       });
-//     }
-    
-//   }
-//   // Nhận diện chữ từ hình ảnh
-//   onMediaSelect = async (media) => {
-//     if (!media.didCancel) {
-//       this.setState({
-//         image: media.uri
-//       });
-//       const result = await ml().cloudDocumentTextRecognizerProcessImage(
-//         media.uri,
-//       );
-//       this.setState({
-//         result: result.text,
-//         text: result.text
-//       });
-//     }
-//   };
-//   // Xét trạng thái modal
-//   onPressModal = () => {
-//     this.setState({
-//       modalVisible: !this.state.modalVisible,
-//     });
-//   };
-//   render() {
-//       return (
-//         <ScrollView contentContainerStyle={styles.screen}>
-//           <View>
-//             <View style = {{
-//                 flexDirection: 'row',
-//                 justifyContent: 'space-around',
-//                 marginTop:20
-//               }}>
-//               <TouchableOpacity style={styles.buttonCamera} onPress={this.onTakePhoto}>
-//                 <IconCamera size={90} color={'black'}/>
-//               </TouchableOpacity>
-//               <TouchableOpacity style = {styles.buttonGallery} onPress = {this.onSelectImagePress} >
-//                 <IconGallery size={90} color={'#9999ff'}/>
-//               </TouchableOpacity>
-//             </View>
-//             {/* Hide image upload */}
-//             {/* <Image
-//               resizeMode="contain"
-//               source={{uri: this.state.image}}
-//               style={styles.image}
-//             /> */}
-//             <View style={{flexDirection: 'row',marginTop: 30}}>
-//               <TextInput value={this.state.text}  style={styles.input} onChangeText={this.onChangeText}></TextInput>
-//               <TouchableOpacity style = {styles.buttonResult} onPress={this.onPressMath}>
-//                 <IconEqual size={30} color={'#ff7733'}/>
-//               </TouchableOpacity>
-//             </View>
-//           </View>
-//           <Modal
-//           animationType="slide"
-//           //transparent={true}
-//           visible={this.state.modalVisible}
-//           customBackdrop={
-//               <TouchableWithoutFeedback onPress={this.onPressModal}>
-//                 <View
-//                   style={{
-//                     flex: 1,
-//                   }}
-//                 />
-//               </TouchableWithoutFeedback>
-//           }
-//           //backdropColor='#ffff'
-//           > 
-//             <View style={styles.modalView}>
-//               <Text style={styles.titleResult}>Kết quả</Text>
-//               <Text style={{fontSize: 20}}>Đề bài</Text>
-//               <Text style={{fontSize: 18,marginLeft: 20}}> f(x) = {this.state.text}</Text>
-//               <Text style={{fontSize: 20}}>Kết quả</Text>
-//               <Text style={{fontSize: 18,marginLeft: 20}}> f'(x) = {this.state.kq}</Text>
-//             </View>
-//           </Modal>
-//           <View style={{marginTop: 30}}>
-//             <Text>Bàn phím</Text>
-//             {/* <MathText value={this.state.kq}></MathText> */}
-//           </View>
-//         </ScrollView>
-//       );
-//   }
-// }
+
 const styles = StyleSheet.create({
   screen: {
     alignItems: 'center',

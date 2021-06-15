@@ -40,7 +40,6 @@ class LoginScreen extends React.Component {
         <Image
           source={require('../../../resource/images/LogoHutech.png')}
           style={{
-            
           }}
         />
         <TouchableOpacity style={{padding: 10}} onPress={this.onPressLogin}>

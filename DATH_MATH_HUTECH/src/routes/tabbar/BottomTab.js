@@ -26,6 +26,9 @@ export default DrawerNavigator = () => {
     if (routeName === 'DiscreteMathScreens') {
       return false;
     }
+    if (routeName === 'DashboardScreen') {
+      return false;
+    }
     return true;
   };
 
@@ -35,16 +38,16 @@ export default DrawerNavigator = () => {
         name="DashboardStack"
         component={DashboardStack}
         options={({route}) => ({
-          title: 'Đạo hàm',
+          title: 'Tích phân',
           tabBarVisible: getTabBarVisibility(route),
           
         })}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="NotificationStack"
         component={NotificationStack}
         options={{title: 'Tích phân'}}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };

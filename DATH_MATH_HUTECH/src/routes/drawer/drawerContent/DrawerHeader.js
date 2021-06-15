@@ -7,17 +7,18 @@ export default class DrawerHeader extends React.PureComponent {
     return (
       <View
         style={{
-          flex: 2,
+          flexGrow: 1,
           borderBottomWidth: 1,
           borderBottomColor: '#E5E5E5',
           alignItems: 'center',
+          height: 150
         }}>
         <Image
           source={require('../../../resource/images/LogoHutech.png')}
           style={{
-            marginTop:0,
-            width: WIDTH-200,
-            height: HEIGHT-640,
+            marginTop:15,
+            width: 200,
+            height:200,
           }}
         />
       </View>
