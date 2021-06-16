@@ -17,12 +17,12 @@ class DrawerBody extends React.PureComponent {
   };
   onGoToLinearAlgebra = () => {
     this.props.navigation.navigate('LinearAlgebraScreen', {
-      title: 'Giới hạn',
+      title: 'Hệ phương trình',
     });
   };
   onGoToDiscreteMath = () => {
     this.props.navigation.navigate('DiscreteMathScreen', {
-      title: 'Toán rời rạc',
+      title: 'Ma trận',
     });
   };
   render() {
@@ -49,14 +49,15 @@ class DrawerBody extends React.PureComponent {
           style={styles.itemContainer}
           onPress={this.onGoToLinearAlgebra}>
           <Image source={require('../../../resource/images/lim.png')}/>
-          <Text style={{marginLeft: 10,paddingVertical:15}}>Giới hạn</Text>
+          <Text style={{marginLeft: 10,paddingVertical:15}}>Hệ phương trình</Text>
         </TouchableOpacity>
         <View style={{height:1,backgroundColor:'gray'}}></View>
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToDiscreteMath}>
           <Text style={styles.itemText}>
-            <IconMath3 size={16} /> 
+          <Image source={require('../../../resource/images/lim.png')}/>
+          <Text style={{marginLeft: 10,paddingVertical:15}}>Ma trận</Text>
           </Text>
         </TouchableOpacity>
       </View>
