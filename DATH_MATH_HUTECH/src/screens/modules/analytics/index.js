@@ -168,7 +168,7 @@ export default function Analytics() {
           </TouchableOpacity>
         </View>
         <View style={{flexDirection: 'row',marginTop: 30}}>
-          <TextInput value={baiToan}  style={styles.input} onChangeText={onChangeText} placeholder={'Nhập phép toán tích phân'}></TextInput>
+          <TextInput value={baiToan}  style={styles.input} onChangeText={onChangeText} placeholder={'Nhập phép toán đạo hàm'}></TextInput>
             <TouchableOpacity style = {styles.buttonResult} onPress={onPressMath}>
               <IconEqual size={30} color={'#ff7733'}/>
             </TouchableOpacity>

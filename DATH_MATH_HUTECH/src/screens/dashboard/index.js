@@ -28,6 +28,7 @@ import Modal from 'react-native-modal';
 import MathView, { MathText } from 'react-native-math-view';
 const {width: WIDTH} = Dimensions.get('window');
 const {height: HEIGHT} = Dimensions.get('window');
+import integral from '../Data'
 const Item = ({ expression }) => (
   <View style={{backgroundColor:'red'}}>
     <Text>{expression}</Text>
@@ -35,7 +36,7 @@ const Item = ({ expression }) => (
 );
 export default function DashboardScreen() {
   const [image, setImage] = useState();
-  const [text, setText] = useState({});
+  const [text, setText] = useState();
   const [result, setResult] = useState({});
   const [steps, setSteps] = useState([]);
   const [visible, setVisible] = useState(false);
@@ -49,7 +50,7 @@ export default function DashboardScreen() {
   };
   const onSelectImagePress = () =>
     launchImageLibrary({mediaType: 'image'}, onMediaSelect);
-  const onPressMath = () => {
+  const onPressMath = async () => {
     if(baiToan==''||baiToan==undefined)
     {
       console.log('Bạn phải nhập phép toán')
@@ -87,6 +88,41 @@ export default function DashboardScreen() {
     
     
   }
+
+  const _onPressIntegral = async (item) => {
+    console.log(item)
+      setBaiToan('')
+      try{
+        axios.post(`https://mathsolver.microsoft.com/cameraexp/api/v1/solvelatex`, { 
+        "latexExpression": item,
+        "clientInfo": {
+            "platform": "mobile",
+            "mkt": "vi",
+        },
+        // "customLatex": text,
+      })
+      .then(res => {
+        let evalData = JSON.parse(res.data.results[0].tags[0].actions[0].customData);
+        let evalData1 = JSON.parse(evalData.previewText);
+        console.log(evalData1.mathSolverResult)
+        console.log(evalData1.mathSolverResult.actions[0].solution)
+        // console.log(evalData1.mathSolverResult.actions[0].templateSteps[0].templateName)
+        console.log(evalData1.mathSolverResult.actions[0].templateSteps[0].steps[0].step)
+        let kq=evalData1.mathSolverResult.actions[0].solution
+        setKetQua(kq.toString())
+        // let buoc2=evalData1.mathSolverResult.actions[0].templateSteps[0].steps[1].expression
+        // setkq2(buoc2.toString())
+        setSteps(evalData1.mathSolverResult.actions[0].templateSteps[0].steps)
+        console.log(steps)
+      })
+      }catch(err){
+        console.log(err)
+      }
+      
+   
+    
+    
+  }
   
   const onMediaSelect = async (media) => {
     if (!media.didCancel) {
@@ -95,7 +131,8 @@ export default function DashboardScreen() {
         media.uri,
       );
       setResult(result);
-      setText(result.text);
+      const a = result.text.toLowerCase();
+      setBaiToan(a);
       console.log(result);
     }
   };
@@ -106,7 +143,7 @@ export default function DashboardScreen() {
     setVisible(!visible)
   }
   const onPressMu2=()=> {
-    setTest(test+'^{2}');
+    setBaiToan(baiToan+'^{2}');
   }
   const onPressX=()=> {
     setTest(test+'x');
@@ -117,9 +154,7 @@ export default function DashboardScreen() {
     const _renderItem = ({item}) => {
         return (
           <View style={{flex:1,marginTop: 30}}>
-            <View style={{flexDirection: 'row',paddingHorizontal:15}}>
-              <Text style={{fontSize: 13}}>Bước {buoc}: </Text>
-            </View>
+            
             <View style={{paddingHorizontal:15}}>
                 <MathText
                   value={item.step}
@@ -137,6 +172,20 @@ export default function DashboardScreen() {
           </View>
         )
       }
+      const _renderItemIntegral = ({item}) => {
+        return (
+          <View style={{flex:1,marginTop: 30,backgroundColor:'white'}}>
+            <View style={{alignItems: 'center',marginHorizontal:5}}>
+            <TouchableOpacity style={{borderWidth:1,height:50}} onPress={() => _onPressIntegral(item.integral)}>
+            <MathText
+                value={'$$'+item.integral+'$$'}
+                direction="ltr"
+              />
+            </TouchableOpacity>
+            </View>
+          </View>
+        )
+      }
 
   return (
     <ScrollView contentContainerStyle={styles.screen}>
@@ -147,10 +196,10 @@ export default function DashboardScreen() {
             marginTop:20
           }}>
           <TouchableOpacity style={styles.buttonCamera} onPress={onTakePhoto}>
-            <IconCamera size={90} color={'black'}/>
+            <IconCamera size={30} color={'black'}/>
           </TouchableOpacity>
           <TouchableOpacity style = {styles.buttonGallery} onPress = {onSelectImagePress} >
-            <IconGallery size={90} color={'#9999ff'}/>
+            <IconGallery size={30} color={'#9999ff'}/>
           </TouchableOpacity>
         </View>
         <View style={{flexDirection: 'row',marginTop: 30}}>
@@ -159,15 +208,26 @@ export default function DashboardScreen() {
               <IconEqual size={30} color={'#ff7733'}/>
             </TouchableOpacity>
         </View>
+        
+        
         {/* <Image
           resizeMode="contain"
           source={{uri: image}}
           style={styles.image}
         /> */}
       </View>
-      <View style={{marginTop: 30,flexDirection: 'row',justifyContent:'space-between',width:'100%',paddingHorizontal:20}}>
+      <View style={{flexDirection: 'row',width:'100%',backgroundColor:'white',marginTop:10,paddingHorizontal:20}}>
+          <Text style={{fontSize: 13, marginTop: 15}} >Bài toán: </Text>
+          <View>
+            <MathText
+                value={'$$\\int{'+baiToan+'}dx$$'}
+                direction="ltr"
+              />
+          </View>
+        </View>
+      <View style={{flexDirection: 'row',justifyContent:'space-between',width:'100%',paddingHorizontal:20,backgroundColor:'white',marginVertical:10}}>
         <Text style={{fontSize: 13, marginTop: 15}} >{ketQua? 'Kết quả: ': ''}</Text>
-        <View style={{backgroundColor:'red'}}>
+        <View>
           <MathText
               value={ketQua}
               direction="ltr"
@@ -177,10 +237,40 @@ export default function DashboardScreen() {
             <Text style={{fontSize: 13, color: 'blue',marginTop: 15}}>{ketQua?'Xem các bước giải':''}</Text>
         </TouchableOpacity>
       </View>
+
+      <View style={{backgroundColor:'white',padding: 10,height:120}}>
+        <Text>Gợi ý</Text>
+        <FlatList
+              data={integral}
+              renderItem={_renderItemIntegral}
+              keyExtractor={item => item.id}
+              horizontal={true}
+              
+        />
+      </View>
       <MathText
             value={'$\\int{'+test+'}dx$'}
             direction="ltr"
       />
+      <Text>{text}</Text>
+      <TouchableOpacity onPress={onPressMu2} style={{borderWidth:1,width:60,alignItems: 'center'}}>
+        <MathText
+            value={'$x^2$'}
+            direction="ltr"
+          />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onPressX} style={{borderWidth:1}}>
+        <MathText
+            value={'$x$'}
+            direction="ltr"
+          />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={onPress3} style={{borderWidth:1}}>
+        <MathText
+            value={'$3$'}
+            direction="ltr"
+          />
+      </TouchableOpacity>
       <TouchableOpacity onPress={onPressMu2} style={{borderWidth:1,width:60,alignItems: 'center'}}>
         <MathText
             value={'$x^2$'}
@@ -243,8 +333,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonCamera: {
-    width: WIDTH-300,
-    height: HEIGHT-650,
+    width: 80,
+    height: 80,
     backgroundColor: 'gray',
     color: '#fff',
     justifyContent: 'space-around',
@@ -270,8 +360,8 @@ const styles = StyleSheet.create({
     elevation: 20
   },
   buttonGallery: {
-    width: WIDTH-300,
-    height: HEIGHT-650,
+    width: 80,
+    height: 80,
     backgroundColor: '#e6f2ff',
     borderColor: '#333333',
     justifyContent: 'space-around',
