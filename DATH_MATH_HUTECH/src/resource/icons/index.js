@@ -15,3 +15,5 @@ export const IconMath4 = (props) => <FontAwesome5 name="infinity" {...props} />;
 export const IconCamera = (props) => <FontAwesome5 name="camera" {...props} />;
 export const IconGallery = (props) => <FontAwesome5 name="images" {...props} />;
 export const IconEqual = (props) => <FontAwesome5 name="equals" {...props} />;
+export const IconSad = (props) => <FontAwesome5 name="sad-tear" {...props} />;
+{/* <i class="far fa-sad-tear"></i> */}
