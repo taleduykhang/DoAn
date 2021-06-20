@@ -22,6 +22,18 @@ export default class Header extends React.PureComponent {
             <IconArrowLeft size={18} />
           </TouchableOpacity>
         );
+        case 'DashboardScreen':
+        return (
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={{paddingHorizontal: 10}}
+              onPress={this.onOpenDrawer}>
+              <IconBar size={18} />
+            </TouchableOpacity>
+            <Text>Tích phân</Text>
+          </View>
+          
+        );
       default:
         return (
           <TouchableOpacity

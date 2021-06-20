@@ -31,6 +31,6 @@ const integral = [
         id: 8,
         integral: '\\displaystyle\\int{  3   \\frac {   { x  }^{ 3  }     } {  2x   }    }d x'
     },
-    
 ]
+
 export default integral

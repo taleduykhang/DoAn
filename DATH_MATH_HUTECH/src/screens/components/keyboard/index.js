@@ -1,8 +1,13 @@
 import React, { useLayoutEffect, useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { SafeAreaView, Image, TouchableOpacity, View, StyleSheet } from 'react-native';
 import MathView, { MathText } from 'react-native-math-view';
 import Button from '../button'
 const Keyboard= (props) => {
+    // const flag = props
+    
+    const _onPressFlag = () => {
+        props.onPressFlag();
+    };
     const _onPressMu = () => {
         props.onPressMu();
     };
@@ -100,8 +105,13 @@ const Keyboard= (props) => {
             </View>
             <View style={{flexDirection:'row'}}>
                 {/* <Button math={'$$\\tan (a)$$'} onPress={_onPressTan} style={styles.btn}/>
-                <Button math={'$$\\cot (a)$$'} onPress={_onPressCot} style={styles.btn}/>
-                <Button math={'$$x^{2}$$'} onPress={_onPressMu} style={styles.btn}/> */}
+                <Button math={'$$\\cot (a)$$'} onPress={_onPressCot} style={styles.btn}/> */}
+                <TouchableOpacity onPress={_onPressFlag} style={styles.btnFlag}>
+                    {props.flag?
+                        <Image source={require('../../../resource/images/vi.png')}/>:
+                        <Image source={require('../../../resource/images/eng.png')}/>
+                    }
+                </TouchableOpacity>
                 <Button math={''} onPress={_onPressSpace} style={styles.btnSpace}/>
                 <Button math={'$$+$$'} onPress={_onPressCong} style={styles.btnWhite}/>
                 <Button math={'$$=$$'} onPress={_onPressBang} style={styles.btnWhite}/>
@@ -129,6 +139,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor:'rgba(142, 142, 142, 1)'
     },
+    btnFlag: {
+        justifyContent:'space-around',
+        width:60,
+        alignItems: 'center',
+        margin:5,
+        borderRadius: 5,
+        backgroundColor:'white',
+        borderWidth:1,
+        borderColor: '#E5E5E5',
+    },
     btnWhite:{
         justifyContent:'space-around',
         width:60,
@@ -141,7 +161,7 @@ const styles = StyleSheet.create({
     },
     btnSpace:{
         justifyContent:'space-around',
-        width:270,
+        width:200,
         alignItems: 'center',
         margin:5,
         borderRadius: 5,

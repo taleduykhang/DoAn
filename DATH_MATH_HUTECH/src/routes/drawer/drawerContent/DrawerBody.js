@@ -5,9 +5,7 @@ import {IconMath3, IconMath4,IconMath1,IconMath2} from '../../../resource/icons'
 import MathView, { MathText } from 'react-native-math-view';
 class DrawerBody extends React.PureComponent {
   onGoToDashboard = () => {
-    this.props.navigation.navigate('DashboardScreen', {
-      title: 'Tích phân',
-    });
+    this.props.navigation.navigate('DashboardScreen');
   };
 
   onGoToAnalytics = () => {
@@ -39,26 +37,27 @@ class DrawerBody extends React.PureComponent {
           style={styles.itemContainer}
           onPress={this.onGoToAnalytics}>
           <MathText
-            value={'$\\frac{d}{dx} $ Đạo hàm'}
+            value={'$\\frac{d}{dx}$'}
             direction="ltr"
           />
+          <Text style={{marginLeft: 8,paddingVertical:15}}>Đạo hàm</Text>
         </TouchableOpacity>
         
         <View style={{height:1,backgroundColor:'gray'}}></View>
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToLinearAlgebra}>
-          <Image source={require('../../../resource/images/lim.png')}/>
-          <Text style={{marginLeft: 10,paddingVertical:15}}>Hệ phương trình</Text>
+          <Image source={require('../../../resource/images/equations.png')}/>
+          <Text style={{marginLeft: 12,paddingVertical:15}}>Hệ phương trình</Text>
         </TouchableOpacity>
         <View style={{height:1,backgroundColor:'gray'}}></View>
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToDiscreteMath}>
-          <Text style={styles.itemText}>
-          <Image source={require('../../../resource/images/lim.png')}/>
-          <Text style={{marginLeft: 10,paddingVertical:15}}>Ma trận</Text>
-          </Text>
+          
+          <Image source={require('../../../resource/images/matrix.png')}/>
+          <Text style={{marginLeft: 12,paddingVertical:15}}>Ma trận</Text>
+          
         </TouchableOpacity>
       </View>
     );

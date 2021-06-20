@@ -10,7 +10,7 @@ import {
   TextInput,
   Alert,
   FlatList,
-  TouchableWithoutFeedback,
+  ActivityIndicator,
   SafeAreaView
 } from 'react-native';
 import {
@@ -37,12 +37,15 @@ export default function DashboardScreen() {
   const [result, setResult] = useState({});
   const [steps, setSteps] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [visibleImage, setVisibleImage] = useState(false);
   const [ketQua, setKetQua] = useState('');
-  const [buoc, setBuoc] = useState(0);
+  const [isLoad, setIsLoad] = useState(false);
   const [baiToan, setBaiToan] = useState('');
   const [isGiai, setIsGiai] = useState(false);
   const [isBuoc, setIsBuoc] = useState(false);
   const [isImage, setIsImage] = useState(false);
+  const [flag, setFlag] = useState('vi');
+  const [isVN, setIsVN] = useState(true);
   const onTakePhoto = () => launchCamera({mediaType: 'image'}, onMediaSelect);
   const onChangeText = (text) => {
     setBaiToan(text);
@@ -52,25 +55,15 @@ export default function DashboardScreen() {
     
 
     const onPressMathImage = async () => {
-      if(text==''||text==undefined)
-      {
-        Alert.alert(
-          "Thông báo",
-          "Bạn phải chọn hình ảnh",
-          [
-            { text: "OK"}
-          ],
-          { cancelable: false }
-        );
-      }
-      else{
+      setIsLoad(true)
+      setIsGiai(false)
         console.log(text)
         try{
           axios.post(`https://mathsolver.microsoft.com/cameraexp/api/v1/solvelatex`, { 
           "latexExpression": '\\int{'+text+'}dx',
           "clientInfo": {
               "platform": "mobile",
-              "mkt": "vi",
+              "mkt": flag,
           },
           // "customLatex": text,
         })
@@ -80,15 +73,28 @@ export default function DashboardScreen() {
           console.log(evalData1.mathSolverResult)
           if(evalData1.mathSolverResult==null)
           {
+            if(isVN==true)
+            {
+              Alert.alert(
+                "Thông báo",
+                "Không thể giải bài toán này",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );
+            }
+            else{
             Alert.alert(
-              "Thông báo",
-              "Không thể giải bài toán này",
+              "Notification",
+              "Can't solve this problem",
               [
                 { text: "OK"}
               ],
               { cancelable: false }
-            );
+            );}
             setIsGiai(false)
+            setIsLoad(false)
           }
           else{
             console.log(evalData1.mathSolverResult.actions[0].solution)
@@ -102,18 +108,33 @@ export default function DashboardScreen() {
               console.log(steps)
               setIsBuoc(true)
               setIsGiai(true)
+              setIsLoad(false)
             }
             else{
+              setIsLoad(false)
               setIsBuoc(false)
               setIsGiai(true)
-              Alert.alert(
-                "Thông báo",
-                "Vẫn chưa có bước giải cho bài toán này",
-                [
-                  { text: "OK"}
-                ],
-                { cancelable: false }
-              );
+              if(isVN==true)
+              {
+                Alert.alert(
+                  "Thông báo",
+                  "Vẫn chưa có bước giải cho bài toán này",
+                  [
+                    { text: "OK"}
+                  ],
+                  { cancelable: false }
+                );
+              }
+              else{
+                Alert.alert(
+                  "Notification",
+                  "There is no solution to this problem yet",
+                  [
+                    { text: "OK"}
+                  ],
+                  { cancelable: false }
+                );
+              }
             }
           }
           
@@ -124,21 +145,37 @@ export default function DashboardScreen() {
           console.log(err)
         }
         
-      }
+      
       
       
     } 
   const onPressMath = async () => {
+    setIsLoad(true)
+    setIsGiai(false)
     if(baiToan==''||baiToan==undefined)
     {
-      Alert.alert(
-        "Thông báo",
-        "Bạn phải nhập phép toán",
-        [
-          { text: "OK"}
-        ],
-        { cancelable: false }
-      );
+      
+          if(isVN==true)
+            {
+              Alert.alert(
+                "Thông báo",
+                "Bạn phải nhập phép toán",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );
+            }
+            else{
+              Alert.alert(
+                "Notification",
+                "You must enter math",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );}
+      setIsLoad(false)
     }
     else{
       console.log(baiToan)
@@ -147,7 +184,7 @@ export default function DashboardScreen() {
         "latexExpression": '\\int{'+baiToan+'}dx',
         "clientInfo": {
             "platform": "mobile",
-            "mkt": "vi",
+            "mkt": flag,
         },
         // "customLatex": text,
       })
@@ -157,15 +194,28 @@ export default function DashboardScreen() {
         console.log(evalData1.mathSolverResult)
         if(evalData1.mathSolverResult==null)
         {
-          Alert.alert(
-            "Thông báo",
-            "Không thể giải bài toán này",
-            [
-              { text: "OK"}
-            ],
-            { cancelable: false }
-          );
-          setIsGiai(false)
+          if(isVN==true)
+            {
+              Alert.alert(
+                "Thông báo",
+                "Không thể giải bài toán này",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );
+            }
+            else{
+            Alert.alert(
+              "Notification",
+              "Can't solve this problem",
+              [
+                { text: "OK"}
+              ],
+              { cancelable: false }
+            );}
+            setIsGiai(false)
+            setIsLoad(false)
         }
         else{
           console.log(evalData1.mathSolverResult.actions[0].solution)
@@ -179,18 +229,33 @@ export default function DashboardScreen() {
             console.log(steps)
             setIsBuoc(true)
             setIsGiai(true)
+            setIsLoad(false)
           }
           else{
+            setIsLoad(false)
             setIsBuoc(false)
             setIsGiai(true)
-            Alert.alert(
-              "Thông báo",
-              "Vẫn chưa có bước giải cho bài toán này",
-              [
-                { text: "OK"}
-              ],
-              { cancelable: false }
-            );
+            if(isVN==true)
+            {
+              Alert.alert(
+                "Thông báo",
+                "Vẫn chưa có bước giải cho bài toán này",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );
+            }
+            else{
+              Alert.alert(
+                "Notification",
+                "There is no solution to this problem yet",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );
+            }
           }
         }
         
@@ -209,12 +274,14 @@ export default function DashboardScreen() {
   const _onPressIntegral = async (item) => {
     console.log(item)
       setBaiToan('')
+      setIsLoad(true)
+      setIsGiai(false)
       try{
         axios.post(`https://mathsolver.microsoft.com/cameraexp/api/v1/solvelatex`, { 
         "latexExpression": item,
         "clientInfo": {
             "platform": "mobile",
-            "mkt": "vi",
+            "mkt": flag,
         },
         // "customLatex": text,
       })
@@ -224,31 +291,28 @@ export default function DashboardScreen() {
         console.log(evalData1.mathSolverResult)
         if(evalData1.mathSolverResult==null)
         {
-          setKetQua('')
-          Alert.alert(
-            "Thông báo",
-            "Không thể giải bài toán này",
-            [
-              { text: "OK"}
-            ],
-            { cancelable: false }
-          );
-        }
-        else{
-          console.log(evalData1.mathSolverResult.actions[0].solution)
-          let kq=evalData1.mathSolverResult.actions[0].solution
-          setKetQua(kq.toString())
-          if(evalData1.mathSolverResult==null)
-        {
-          Alert.alert(
-            "Thông báo",
-            "Không thể giải bài toán này vui lòng nhập lại",
-            [
-              { text: "OK"}
-            ],
-            { cancelable: false }
-          );
-          setIsGiai(false)
+          if(isVN==true)
+            {
+              Alert.alert(
+                "Thông báo",
+                "Không thể giải bài toán này",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );
+            }
+            else{
+            Alert.alert(
+              "Notification",
+              "Can't solve this problem",
+              [
+                { text: "OK"}
+              ],
+              { cancelable: false }
+            );}
+            setIsGiai(false)
+            setIsLoad(false)
         }
         else{
           console.log(evalData1.mathSolverResult.actions[0].solution)
@@ -262,20 +326,35 @@ export default function DashboardScreen() {
             console.log(steps)
             setIsBuoc(true)
             setIsGiai(true)
+            setIsLoad(false)
           }
           else{
             setIsBuoc(false)
             setIsGiai(true)
-            Alert.alert(
-              "Thông báo",
-              "Vẫn chưa có bước giải cho bài toán này",
-              [
-                { text: "OK"}
-              ],
-              { cancelable: false }
-            );
+            setIsLoad(false)
+            if(isVN==true)
+            {
+              Alert.alert(
+                "Thông báo",
+                "Vẫn chưa có bước giải cho bài toán này",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );
+            }
+            else{
+              Alert.alert(
+                "Notification",
+                "There is no solution to this problem yet",
+                [
+                  { text: "OK"}
+                ],
+                { cancelable: false }
+              );
+            }
+            
           }
-        }
         }
         
       })
@@ -297,6 +376,8 @@ export default function DashboardScreen() {
       const a = result.text.toLowerCase();
       setText(a);
       setIsImage(true);
+      setVisibleImage(false);
+      setBaiToan('')
       console.log(result);
     }
   };
@@ -305,6 +386,9 @@ export default function DashboardScreen() {
   }, [steps])
   const onPressModal = () => {
     setVisible(!visible)
+  }
+  const onPressModalImage = () => {
+    setVisibleImage(!visibleImage)
   }
   const _onPressCan2=()=> {
     setBaiToan(baiToan+'\\sqrt{ }');
@@ -373,6 +457,20 @@ export default function DashboardScreen() {
   const _onPressSpace=()=> {
     setBaiToan(baiToan+' ');
   }
+  const _onPressFlag=()=> {
+    setIsVN(!isVN)
+    setIsGiai(false)
+  }
+  useEffect(() => {
+    if(isVN==true)
+    {
+      setFlag('vi');
+    }
+    else{
+      setFlag('en');
+    }
+  }, [isVN])
+  
     const _renderItem = ({item}) => {
         return (
           <View style={{flex:1,marginTop: 30}}>
@@ -398,7 +496,7 @@ export default function DashboardScreen() {
         return (
           <View style={{flex:1,marginTop: 5,backgroundColor:'white'}}>
             <View style={{alignItems: 'center',marginHorizontal:5}}>
-            <TouchableOpacity style={{borderWidth:1,height:50}} onPress={() => _onPressIntegral(item.integral)}>
+            <TouchableOpacity style={{borderWidth:0.5,height:50}} onPress={() => _onPressIntegral(item.integral)}>
             <MathText
                 value={'$$'+item.integral+'$$'}
                 direction="ltr"
@@ -411,55 +509,25 @@ export default function DashboardScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.screen}>
-        <View style = {{
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-            marginVertical:10,
-            width:'100%',
-            backgroundColor:'white',
-            padding:5
-          }}>
-          {isImage?(
-            <View style={{flexDirection: 'row'}}>
-            <Text style={{paddingTop: 5}}>Bài toán nhận được: {text}</Text>
-        {/* <TextInput value={text}  style={styles.input} onChangeText={onChangeText} placeholder={'Chọn hình ảnh'}></TextInput> */}
-            <TouchableOpacity style = {styles.buttonResultImage} onPress={onPressMathImage}>
-              <IconEqual size={15} color={'#ff7733'}/>
-            </TouchableOpacity>
-        </View>
-          ):(
-            <View style = {{
-            flexDirection: 'row'
-          }}>
-            <TouchableOpacity style={styles.buttonCamera} onPress={onTakePhoto}>
-              <IconCamera size={20} color={'black'}/>
-            </TouchableOpacity>
-            <TouchableOpacity style = {styles.buttonGallery} onPress = {onSelectImagePress} >
-              <IconGallery size={20} color={'#9999ff'}/>
-            </TouchableOpacity>
-          </View>
-          )}
-          
-          
-          
-        </View>
-        
-       
-        
+
         {/* <Image
           resizeMode="contain"
           source={{uri: image}}
           style={styles.image}
         /> */}
+       
         <View style={{width:'100%',backgroundColor:'white',marginBottom:10,paddingHorizontal:20}}>
         <View style={{flexDirection: 'row',marginTop: 30,width:'100%'}}>
-          <TextInput value={baiToan}  style={styles.input} onChangeText={onChangeText} placeholder={'Nhập phép toán tích phân'}></TextInput>
+            <TextInput value={baiToan}  style={styles.input} onChangeText={onChangeText} placeholder={isVN? 'Nhập phép toán tích phân':'Enter the integral operation'}></TextInput>
+            <TouchableOpacity style = {{marginTop:10,marginLeft:-40,marginRight:15}} onPress = {onPressModalImage} >
+              <IconGallery size={25} color={'#9999ff'}/>
+            </TouchableOpacity>
             <TouchableOpacity style = {styles.buttonResult} onPress={onPressMath}>
               <IconEqual size={30} color={'#ff7733'}/>
             </TouchableOpacity>
         </View>
         <View style={{flexDirection: 'row',width:'100%',backgroundColor:'white',marginTop:10}}>
-          <Text style={{fontSize: 13, marginTop: 18}} >Bài toán: </Text>
+          <Text style={{fontSize: 13, marginTop: 18}} >{isVN?'Bài toán: ':'Problem: '} </Text>
           <View>
             <MathText
                 value={'$$\\int{'+baiToan+'}  dx$$'}
@@ -467,12 +535,20 @@ export default function DashboardScreen() {
               />
           </View>
         </View>
+        {isImage?(
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{paddingTop: 5,marginRight:10}}>{isVN?'Bài toán nhận được: ':'The problem gets: '} {text}</Text>
+              <TouchableOpacity style = {{}} onPress={onPressMathImage}>
+                <Text style={{marginTop:5, color:'#ff7733',borderBottomWidth:1,borderColor:'#ff7733'}}>{isVN?'Giải':'Solution'} </Text>
+              </TouchableOpacity>
+            </View>
+          ):(null)}
         </View>
       
         {isGiai? (
-          <View style={{justifyContent:'space-between',width:'100%',paddingHorizontal:20,backgroundColor:'white',marginVertical:10}}>
+          <View style={{justifyContent:'space-between',width:'100%',paddingHorizontal:20,backgroundColor:'white',marginBottom:10}}>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{fontSize: 13, paddingTop: 18}} >{'Kết quả: '}</Text>
+                <Text style={{fontSize: 13, paddingTop: 18}} >{isVN?'Kết quả: ':'Result: '}</Text>
                 <View>
                   <MathText
                       value={ketQua}  
@@ -483,12 +559,12 @@ export default function DashboardScreen() {
             <View style={{marginBottom:10}}>
               {isBuoc  ? (
                   <TouchableOpacity onPress={onPressModal}>
-                    <Text style={{fontSize: 13, color: 'rgba(0, 128, 255, 1)'}}>{'Xem các bước giải'}</Text>
+                    <Text style={{fontSize: 13, color: 'rgba(0, 128, 255, 1)',borderBottomWidth:1,borderColor:'rgba(0, 128, 255, 1)',width:130}}>{isVN?'Xem các bước giải ...':'See the solution steps'}</Text>
                   </TouchableOpacity>
                   
                 ):(
                   <View style={{flexDirection: 'row'}}>
-                    <Text style={{fontSize: 13, color: '#ff7733'}}>{'Chưa có các bước giải cho bài toán này '}</Text>
+                    <Text style={{fontSize: 13, color: '#ff7733'}}>{isVN?'Chưa có các bước giải cho bài toán này ':'There are no steps to solve this problem'}</Text>
                     <IconSad size={13} color={'#ff7733'} style={{paddingTop:3}}/>
                   </View>
                 )
@@ -497,11 +573,16 @@ export default function DashboardScreen() {
           </View>
           
         
-        ):null}
-      
-
+        ): null}
+      {
+        isLoad ? (<View style={{ flex: 1,justifyContent: "center"}}>
+          <ActivityIndicator size="small" color="#0000ff" />
+          <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang giải bài toán xin chờ giây lát':'Solving the math problem, please wait a moment'}</Text>
+        </View>) : null
+      }
+        
       <View style={{backgroundColor:'white',padding: 10,height:100}}>
-        <Text>Ví dụ</Text>
+        <Text>{isVN?'Ví dụ':'For example'}</Text>
         <FlatList
               nestedScrollEnabled={true}
               data={integral}
@@ -534,6 +615,8 @@ export default function DashboardScreen() {
         onPressCot={_onPressCot}
         onPressBang={_onPressBang}
         onPressSpace={_onPressSpace}
+        onPressFlag={_onPressFlag}
+        flag={isVN}
         />
       
       
@@ -541,7 +624,7 @@ export default function DashboardScreen() {
       <Modal visible={visible} onBackdropPress={onPressModal}>
         <View style={styles.modalView}>
           <View style={{alignItems: 'center',backgroundColor:'#54CCB6',height:'10%',justifyContent: 'center', borderTopStartRadius:20, borderTopEndRadius:20}}>
-            <Text style={{fontSize: 26, color: 'white'}}>Các bước giải</Text>
+            <Text style={{fontSize: 26, color: 'white'}}>{isVN?'Các bước giải':'Solution steps'}</Text>
           </View>
           <FlatList
             nestedScrollEnabled={true}
@@ -551,6 +634,16 @@ export default function DashboardScreen() {
             keyExtractor={item => item.expression}
           />
         </View>
+      </Modal>
+      <Modal visible={visibleImage} onBackdropPress={onPressModalImage}>
+          <View style = {{flexDirection: 'row',backgroundColor: "rgba(221, 247, 232, 1)",borderRadius: 20,height:150,margin: 40,justifyContent:'space-around',alignItems: 'center',borderWidth:0.5}}>
+            <TouchableOpacity style={styles.buttonCamera} onPress={onTakePhoto}>
+              <IconCamera size={20} color={'black'}/>
+            </TouchableOpacity>
+            <TouchableOpacity style = {styles.buttonGallery} onPress = {onSelectImagePress} >
+              <IconGallery size={20} color={'#9999ff'}/>
+            </TouchableOpacity>
+          </View>
       </Modal>
     </ScrollView>
   );
@@ -582,15 +675,15 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonCamera: {
-    width: 40,
-    height: 40,
+    width: 80,
+    height: 80,
     backgroundColor: 'gray',
     color: '#fff',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 20,
-    borderWidth:1,
-    marginRight: 10,
+    borderWidth:0.5,
+    // marginRight: 10,
   },
   modalView: {
     height:HEIGHT-50,
@@ -607,14 +700,14 @@ const styles = StyleSheet.create({
     elevation: 20
   },
   buttonGallery: {
-    width: 40,
-    height: 40,
+    width: 80,
+    height: 80,
     backgroundColor: '#e6f2ff',
     borderColor: '#333333',
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 20,
-    borderWidth:1
+    borderWidth:0.5
   },
   input: {
     width: WIDTH-100,
@@ -624,7 +717,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingLeft: 5,
     borderColor: '#333333',
-    borderWidth:1
+    borderWidth:0.5
   },
   buttonResult:{
     justifyContent: 'space-around',
@@ -635,7 +728,7 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     borderRadius:20,
     borderColor: '#333333',
-    borderWidth:1
+    borderWidth:0.5
   },
   buttonResultImage:{
     justifyContent: 'space-around',
@@ -646,6 +739,6 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     borderRadius:10,
     borderColor: '#333333',
-    borderWidth:1
+    borderWidth:0.5
   }
 });

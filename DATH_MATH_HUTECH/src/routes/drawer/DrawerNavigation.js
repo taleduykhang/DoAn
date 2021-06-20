@@ -13,7 +13,12 @@ const Drawer = createDrawerNavigator();
 export default DrawerNavigator = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
-      <Drawer.Screen name="BottomTab" component={BottomTab} />
+      {/* <Drawer.Screen name="BottomTab" component={BottomTab} /> */}
+      <Drawer.Screen
+        name="DashboardStack"
+        component={DashboardStack}
+        // options={{headerShown: false}}
+      />
     </Drawer.Navigator>
   );
 };
