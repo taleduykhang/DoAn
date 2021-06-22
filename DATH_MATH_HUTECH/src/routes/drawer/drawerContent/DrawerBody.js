@@ -20,7 +20,7 @@ class DrawerBody extends React.PureComponent {
   };
   onGoToDiscreteMath = () => {
     this.props.navigation.navigate('DiscreteMathScreen', {
-      title: 'Ma trận',
+      title: 'Tổng hợp các bài toán',
     });
   };
   render() {
@@ -54,9 +54,8 @@ class DrawerBody extends React.PureComponent {
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToDiscreteMath}>
-          
-          <Image source={require('../../../resource/images/matrix.png')}/>
-          <Text style={{marginLeft: 12,paddingVertical:15}}>Ma trận</Text>
+          <Image source={require('../../../resource/images/factor.png')}/>
+          <Text style={{marginLeft: 12,paddingVertical:15}}>Tổng hợp các bài toán</Text>
           
         </TouchableOpacity>
       </View>

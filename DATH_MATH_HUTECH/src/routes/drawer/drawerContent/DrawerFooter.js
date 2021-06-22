@@ -7,7 +7,7 @@ import {IconCog, IconSignOut} from '../../../resource/icons';
 class DrawerFooter extends React.PureComponent {
   onSettings = () => {
     this.props.navigation.navigate('SettingScreen', {
-      title: 'Settings',
+      title: 'Thông tin phần mềm',
     });
   };
 
@@ -23,12 +23,12 @@ class DrawerFooter extends React.PureComponent {
           style={styles.itemContainer}
           onPress={this.onSettings}>
           <Text style={styles.itemText}>
-            <IconCog size={16} /> Cài đặt
+            <IconCog size={16} color={'#FFA400'}/> Thông tin
           </Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.itemContainer} onPress={this.onLogout}>
           <Text style={styles.itemText}>
-            <IconSignOut size={16} /> Trở về
+            <IconSignOut size={16} color={'red'}/> Trở về
           </Text>
         </TouchableOpacity>
       </View>

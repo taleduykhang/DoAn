@@ -53,7 +53,6 @@ export default function DashboardScreen() {
   const onSelectImagePress = () =>
     launchImageLibrary({mediaType: 'image'}, onMediaSelect);
     
-
     const onPressMathImage = async () => {
       setIsLoad(true)
       setIsGiai(false)
@@ -618,7 +617,6 @@ export default function DashboardScreen() {
         onPressFlag={_onPressFlag}
         flag={isVN}
         />
-      
       
       
       <Modal visible={visible} onBackdropPress={onPressModal}>
