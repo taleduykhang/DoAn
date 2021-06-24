@@ -13,7 +13,9 @@ import AnalyticsScreen from '../../screens/modules/analytics';
 import LinearAlgebraScreen from '../../screens/modules/linearAlgebra';
 import DiscreteMathScreen from '../../screens/modules/discreteMath';
 import SettingScreen from '../../screens/dashboard/settings';
-
+import Math from '../../screens/firebase/math'
+import derivativeFormula from '../../screens/firebase/math/derivativeFormula'
+import integralFormula from '../../screens/firebase/math/integralFormula'
 const Stack = createStackNavigator();
 
 export default DashboardStack = () => {
@@ -36,6 +38,9 @@ export default DashboardStack = () => {
       <Stack.Screen name="LinearAlgebraScreen" component={LinearAlgebraScreen} />
       <Stack.Screen name="DiscreteMathScreen" component={DiscreteMathScreen} />
       <Stack.Screen name="SettingScreen" component={SettingScreen} />
+      <Stack.Screen name="Math" component={Math} />
+      <Stack.Screen name="derivativeFormula" component={derivativeFormula} />
+      <Stack.Screen name="integralFormula" component={integralFormula} />
     </Stack.Navigator>
   );
 };

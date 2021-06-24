@@ -1,4 +1,4 @@
-import React, { Component} from 'react';
+import React, { } from 'react';
 import {
     View,
     Text,
@@ -12,53 +12,29 @@ import {
     FlatList,
     ActivityIndicator,
     SafeAreaView, 
-    FlatList,
   } from 'react-native';
-import firebaseApp from '../configFirebase'
-import MathView, { MathText } from 'react-native-math-view';
-export default class Math extends React.Component {
-    constructor(props) {
-        super(props);
-        this.itemRef=firebaseApp.database();
-        this.state ={
-            dataSource: [],
-        }
-    }
 
-    _renderItemFactor = ({item}) => {
-        return (
-          <View style={{flex:1,marginTop: 5,backgroundColor:'white'}}>
-                <Text>{item.name}</Text>
-          </View>
-        )
+import MathView, { MathText } from 'react-native-math-view';
+export default function Math ({navigation}) {
+
+    const _onPressDerivativeFormula = () => {
+        navigation.navigate('derivativeFormula', {
+            title: 'Các công thức đạo hàm',
+        });
     }
-    listenForItem(itemRef){
-        var items=[];
-        this.itemRef.ref('derivative').on('child_added',(dataSnapshot)=>{
-            items.push({
-                name:dataSnapshot.val(),
-                key:dataSnapshot.key
-            });
-            this.setState({
-                dataSource: items.name
-            })
-        })
-    
+    const _onPressIntegralFormula = () => {
+        navigation.navigate('integralFormula', {
+            title: 'Các công thức tích phân',
+        });
     }
-    componentDidMount(){
-        this.listenForItem(this.itemRef)
-    }
-    render(){
-        return (
-            <View>
-               <FlatList
-                    nestedScrollEnabled={true}
-                    scrollEnabled={true}
-                    data={this.state.dataSource}
-                    renderItem={this._renderItemFactor}
-                    keyExtractor={item => item.key}
-                />
-            </View>
-        )
-    }
+    return(
+        <View>
+            <TouchableOpacity onPress={_onPressDerivativeFormula}>
+                <Text>Công thức tính đạo hàm</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={_onPressIntegralFormula}>
+                <Text>Công thức tính tích phân</Text>
+            </TouchableOpacity>
+        </View>
+    )
 }

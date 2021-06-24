@@ -23,6 +23,11 @@ class DrawerBody extends React.PureComponent {
       title: 'Tổng hợp các bài toán',
     });
   };
+  onGoToMath = () => {
+    this.props.navigation.navigate('Math', {
+      title: 'Tổng hợp công thức',
+    });
+  };
   render() {
     return (
       <View style={{flex: 7}}>
@@ -56,7 +61,13 @@ class DrawerBody extends React.PureComponent {
           onPress={this.onGoToDiscreteMath}>
           <Image source={require('../../../resource/images/factor.png')}/>
           <Text style={{marginLeft: 12,paddingVertical:15}}>Tổng hợp các bài toán</Text>
-          
+        </TouchableOpacity>
+        <View style={{height:1,backgroundColor:'gray'}}></View>
+        <TouchableOpacity
+          style={styles.itemContainer}
+          onPress={this.onGoToMath}>
+          <Image source={require('../../../resource/images/factor.png')}/>
+          <Text style={{marginLeft: 12,paddingVertical:15}}>Tổng hợp công thức</Text>
         </TouchableOpacity>
       </View>
     );
