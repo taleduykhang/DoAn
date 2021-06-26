@@ -66,7 +66,7 @@ class DrawerBody extends React.PureComponent {
         <TouchableOpacity
           style={styles.itemContainer}
           onPress={this.onGoToMath}>
-          <Image source={require('../../../resource/images/factor.png')}/>
+          <Image source={require('../../../resource/images/math123.png')}/>
           <Text style={{marginLeft: 12,paddingVertical:15}}>Tổng hợp công thức</Text>
         </TouchableOpacity>
       </View>

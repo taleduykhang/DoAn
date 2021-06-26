@@ -28,12 +28,16 @@ export default function derivativeFormula () {
     const [math, setMath] = useState('');
     const [visible, setVisible] = useState(false);
     const [isLoad, setIsLoad] = useState(false);
+    const [ketQua, setKetQua] = useState('');
+    const [isKetQua, setIsKetQua] = useState(false);
+    const [isList, setIsList] = useState(false);
     useEffect(() =>{
+        setIsList(true)
         db.ref('derivative').on('value', querySnapShot => {
         const data = querySnapShot.val() ? querySnapShot.val() : {};
         //const todoItems = {...data};
         setPost(data);
-        
+        setIsList(false)
         });
         console.log(post)
     },[])
@@ -41,7 +45,8 @@ export default function derivativeFormula () {
     const _onPressDerivative = async (item) => {
         setMath(item);
         setVisible(true);
-        setIsLoad(true)
+        setIsLoad(true);
+        setIsKetQua(true);
             try{
                 axios.post(`https://mathsolver.microsoft.com/cameraexp/api/v1/solvelatex`, { 
                 "latexExpression": item,
@@ -71,7 +76,8 @@ export default function derivativeFormula () {
                 else{
                 console.log(evalData1.mathSolverResult.actions[0].solution)
                 let kq=evalData1.mathSolverResult.actions[0].solution
-                // setMath(kq.toString())
+                setKetQua(kq.toString())
+                setIsKetQua(false)
                 if(evalData1.mathSolverResult.actions[0].templateSteps[0]!=undefined)
                 {
                     console.log(evalData1.mathSolverResult.actions[0].templateSteps[0].templateName)
@@ -91,7 +97,7 @@ export default function derivativeFormula () {
                         { cancelable: false }
                     );
                     setIsLoad(false)
-                    setVisible(false);
+                    //setVisible(false);
                 }
                 }
             })
@@ -130,8 +136,8 @@ export default function derivativeFormula () {
                 value={'$$'+item.derivative+'$$'}
                 direction="ltr"
                 />
-            <TouchableOpacity style={{borderBottomWidth:0.5}} onPress={() => _onPressDerivative(item.math)}>
-                <Text>Xem ví dụ</Text>
+            <TouchableOpacity style={{borderBottomWidth:0.5,borderColor:'#0000ff'}} onPress={() => _onPressDerivative(item.math)}>
+                <Text style={{color:'#0000ff'}}>Xem ví dụ</Text>
             </TouchableOpacity>
             </View>
         </View>
@@ -142,13 +148,21 @@ export default function derivativeFormula () {
     }
     return(
         <View style={{flex:1}}>
-            <FlatList
+            {isList?(
+                <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
+                        <ActivityIndicator size="small" color="#54CCB6" />
+                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang lấy danh sách xin chờ giây lát'}</Text>
+                        </View>
+            ):(
+                <FlatList
                     nestedScrollEnabled={true}
                     scrollEnabled={true}
                     data={post}
                     renderItem={_renderItemDerivative}
                     keyExtractor={item => item.derivative}
-            />
+                />
+            )}
+            
             <Modal visible={visible} onBackdropPress={onPressModal}>
                 <View style={styles.modalView}>
                     <View style={{alignItems: 'center',backgroundColor:'#54CCB6',height:'10%',justifyContent: 'center', borderTopStartRadius:20, borderTopEndRadius:20}}>
@@ -161,6 +175,21 @@ export default function derivativeFormula () {
                             direction="ltr"
                         />
                     </View>
+                    {isKetQua ? (
+                        <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
+                        <ActivityIndicator size="small" color="#54CCB6" />
+                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang lấy kết quả xin chờ giây lát'}</Text>
+                        </View>
+                        
+                    ):(
+                        <View style={{justifyContent: 'center',alignItems: 'center',borderBottomWidth:0.5}}>
+                        <Text style={{marginTop:15}}>{'Kết quả'}</Text>
+                        <MathText
+                            value={'$$'+ketQua+'$$'}
+                            direction="ltr"
+                        />
+                        </View>
+                    )}
                     {
                         isLoad ? (
                             <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
