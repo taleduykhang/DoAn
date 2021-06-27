@@ -97,6 +97,7 @@ export default function derivativeFormula () {
                         { cancelable: false }
                     );
                     setIsLoad(false)
+                    setSteps([])
                     //setVisible(false);
                 }
                 }
