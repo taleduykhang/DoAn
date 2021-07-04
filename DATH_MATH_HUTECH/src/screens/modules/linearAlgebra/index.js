@@ -28,14 +28,15 @@ import Modal from 'react-native-modal';
 import MathView, { MathText } from 'react-native-math-view';
 const {width: WIDTH} = Dimensions.get('window');
 const {height: HEIGHT} = Dimensions.get('window');
-import equations from '../../Data/equations'
+// import equations from '../../Data/equations'
 import Keyboard from '../../components/keyboard'
-
+import {db} from '../../firebase/configFirebase'
 export default function LinearAlgebra() {
   const [image, setImage] = useState();
   const [text, setText] = useState();
   const [result, setResult] = useState({});
   const [steps, setSteps] = useState([]);
+  const [equations, setEquations] = useState([]);
   const [visible, setVisible] = useState(false);
   const [visibleImage, setVisibleImage] = useState(false);
   const [ketQua, setKetQua] = useState('');
@@ -47,7 +48,7 @@ export default function LinearAlgebra() {
   const [isImage, setIsImage] = useState(false);
   const [flag, setFlag] = useState('vi');
   const [isVN, setIsVN] = useState(true);
-  
+  const [isList, setIsList] = useState(false);
   const onChangeText = (text) => {
     setBaiToan(text);
   };
@@ -55,7 +56,16 @@ export default function LinearAlgebra() {
     setBaiToan2(text);
   };
     
-
+  useEffect(() =>{
+    setIsList(true)
+    db.ref('equationsMath').on('value', querySnapShot => {
+    const data = querySnapShot.val() ? querySnapShot.val() : {};
+    //const todoItems = {...data};
+    setEquations(data);
+    setIsList(false)
+    });
+    console.log(equations)
+},[])
     
   const onPressMath = async () => {
     setIsLoad(true)
@@ -473,13 +483,18 @@ export default function LinearAlgebra() {
         
         ): null}
       {
-        isLoad ? (<View style={{ flex: 1,justifyContent: "center"}}>
+        isLoad ? (<View style={{ paddingVertical: 10,justifyContent: "center"}}>
           <ActivityIndicator size="small" color="#0000ff" />
           <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang giải bài toán xin chờ giây lát':'Solving the math problem, please wait a moment'}</Text>
         </View>) : null
       }
-        
-      <View style={{backgroundColor:'white',padding: 10,height:100}}>
+      {isList?(
+        <View style={{justifyContent: "center",paddingVertical: 10}}>
+          <ActivityIndicator size="small" color="#0000ff" />
+          <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang tải ví dụ xin chờ giây lát':'Loading example please wait a moment'}</Text>
+        </View>
+            ):(
+              <View style={{backgroundColor:'white',padding: 10,height:100}}>
         <Text>{isVN?'Ví dụ':'For example'}</Text>
         <FlatList
               nestedScrollEnabled={true}
@@ -490,6 +505,8 @@ export default function LinearAlgebra() {
               scrollEnabled={true}
         />
       </View>
+            )}
+      
 
       <Keyboard 
         onPressMu={_onPressMu} 

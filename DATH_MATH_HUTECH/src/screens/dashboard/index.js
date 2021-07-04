@@ -1,4 +1,4 @@
-import React, {useState,useEffect}from 'react';
+import React, {useState,useEffect,useLayoutEffect}from 'react';
 import {
   View,
   Text,
@@ -22,20 +22,21 @@ import ml from '@react-native-firebase/ml';
 
 import MathJax from 'react-native-mathjax'
 import axios from 'axios';
-import {IconCamera,IconSad,IconEqual,IconGallery} from '../../resource/icons';
+import {IconCamera,IconSad,IconEqual,IconGallery,IconBar} from '../../resource/icons';
 import Modal from 'react-native-modal';
 // import { StaticMathField  } from 'react-mathquill'
 import MathView, { MathText } from 'react-native-math-view';
 const {width: WIDTH} = Dimensions.get('window');
 const {height: HEIGHT} = Dimensions.get('window');
-import integral from '../Data'
+// import integral from '../Data'
 import Keyboard from '../components/keyboard'
-
-export default function DashboardScreen() {
+import {db} from '../firebase/configFirebase'
+export default function DashboardScreen({navigation}) {
   const [image, setImage] = useState();
   const [text, setText] = useState();
   const [result, setResult] = useState({});
   const [steps, setSteps] = useState([]);
+  const [integral, setIntegral] = useState([]);
   const [visible, setVisible] = useState(false);
   const [visibleImage, setVisibleImage] = useState(false);
   const [ketQua, setKetQua] = useState('');
@@ -46,10 +47,44 @@ export default function DashboardScreen() {
   const [isImage, setIsImage] = useState(false);
   const [flag, setFlag] = useState('vi');
   const [isVN, setIsVN] = useState(true);
+  const [isList, setIsList] = useState(false);
   const onTakePhoto = () => launchCamera({mediaType: 'image'}, onMediaSelect);
   const onChangeText = (text) => {
     setBaiToan(text);
   };
+  // const onOpenDrawer = () => {
+  //   navigation.openDrawer();
+  // };
+  // useLayoutEffect(() => {
+  //   navigation.setOptions({
+  //     title: '',
+  //     headerLeft: () => (
+  //       <View style={{flexDirection: 'row'}}>
+  //         <TouchableOpacity onPress={onOpenDrawer} style={{marginLeft:15,marginTop:5}}>
+  //             <IconBar size={22} color={'white'}/>
+  //         </TouchableOpacity>
+  //         <Text style={{color:'white',fontSize:24,paddingLeft: 20}}>Tích phân</Text>
+  //       </View>
+        
+  //     ),
+  //     headerBackTitle: ' ',
+  //     headerTintColor: 'white',
+  //     headerStyle: {
+  //       backgroundColor: '#54CCB6'
+  //     },
+  //   });
+  // });
+  useEffect(() =>{
+    setIsList(true)
+    db.ref('integralMath').on('value', querySnapShot => {
+    const data = querySnapShot.val() ? querySnapShot.val() : {};
+    //const todoItems = {...data};
+    setIntegral(data);
+    setIsList(false)
+    });
+    console.log(integral)
+},[])
+
   const onSelectImagePress = () =>
     launchImageLibrary({mediaType: 'image'}, onMediaSelect);
     
@@ -574,23 +609,30 @@ export default function DashboardScreen() {
         
         ): null}
       {
-        isLoad ? (<View style={{ flex: 1,justifyContent: "center"}}>
+        isLoad ? (<View style={{justifyContent: "center",paddingVertical: 10}}>
           <ActivityIndicator size="small" color="#0000ff" />
           <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang giải bài toán xin chờ giây lát':'Solving the math problem, please wait a moment'}</Text>
         </View>) : null
       }
-        
-      <View style={{backgroundColor:'white',padding: 10,height:100}}>
-        <Text>{isVN?'Ví dụ':'For example'}</Text>
-        <FlatList
-              nestedScrollEnabled={true}
-              data={integral}
-              renderItem={_renderItemIntegral}
-              keyExtractor={item => item.id}
-              horizontal={true}
-              scrollEnabled={true}
-        />
-      </View>
+      {isList?(
+        <View style={{justifyContent: "center",paddingVertical: 10}}>
+          <ActivityIndicator size="small" color="#0000ff" />
+          <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang tải ví dụ xin chờ giây lát':'Loading example please wait a moment'}</Text>
+        </View>
+            ):(
+              <View style={{backgroundColor:'white',padding: 10,height:100}}>
+                <Text>{isVN?'Ví dụ':'For example'}</Text>
+                <FlatList
+                      nestedScrollEnabled={true}
+                      data={integral}
+                      renderItem={_renderItemIntegral}
+                      keyExtractor={item => item.id}
+                      horizontal={true}
+                      scrollEnabled={true}
+                />
+              </View>
+            )}
+     
 
       <Keyboard 
         onPressMu={_onPressMu} 

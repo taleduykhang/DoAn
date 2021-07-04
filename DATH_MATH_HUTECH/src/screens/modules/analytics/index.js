@@ -1,4 +1,4 @@
-import React, {useState,useEffect}from 'react';
+import React, {useState,useEffect,useLayoutEffect}from 'react';
 import {
   View,
   Text,
@@ -22,20 +22,21 @@ import ml from '@react-native-firebase/ml';
 
 import MathJax from 'react-native-mathjax'
 import axios from 'axios';
-import {IconCamera,IconSad,IconEqual,IconGallery} from '../../../resource/icons';
+import {IconCamera,IconSad,IconEqual,IconGallery,IconBar} from '../../../resource/icons';
 import Modal from 'react-native-modal';
 // import { StaticMathField  } from 'react-mathquill'
 import MathView, { MathText } from 'react-native-math-view';
 const {width: WIDTH} = Dimensions.get('window');
 const {height: HEIGHT} = Dimensions.get('window');
-import derivative from '../../Data/derivative'
+//import derivative from '../../Data/derivative'
 import Keyboard from '../../components/keyboard'
-
-export default function Analytics() {
+import {db} from '../../firebase/configFirebase'
+export default function Analytics(navigation) {
   const [image, setImage] = useState();
   const [text, setText] = useState();
   const [result, setResult] = useState({});
   const [steps, setSteps] = useState([]);
+  const [derivative, setDerivative] = useState([]);
   const [visible, setVisible] = useState(false);
   const [visibleImage, setVisibleImage] = useState(false);
   const [ketQua, setKetQua] = useState('');
@@ -46,14 +47,23 @@ export default function Analytics() {
   const [isImage, setIsImage] = useState(false);
   const [flag, setFlag] = useState('vi');
   const [isVN, setIsVN] = useState(true);
+  const [isList, setIsList] = useState(false);
   const onTakePhoto = () => launchCamera({mediaType: 'image'}, onMediaSelect);
   const onChangeText = (text) => {
     setBaiToan(text);
   };
   const onSelectImagePress = () =>
     launchImageLibrary({mediaType: 'image'}, onMediaSelect);
-    
-
+    useEffect(() =>{
+      setIsList(true)
+      db.ref('derivativeMath').on('value', querySnapShot => {
+      const data = querySnapShot.val() ? querySnapShot.val() : {};
+      //const todoItems = {...data};
+      setDerivative(data);
+      setIsList(false)
+      });
+      console.log(derivative)
+  },[])
     const onPressMathImage = async () => {
       setIsLoad(true)
       setIsGiai(false)
@@ -575,13 +585,18 @@ export default function Analytics() {
         
         ): null}
       {
-        isLoad ? (<View style={{ flex: 1,justifyContent: "center"}}>
+        isLoad ? (<View style={{ justifyContent: "center",paddingVertical: 10}}>
           <ActivityIndicator size="small" color="#0000ff" />
           <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang giải bài toán xin chờ giây lát':'Solving the math problem, please wait a moment'}</Text>
         </View>) : null
       }
-        
-      <View style={{backgroundColor:'white',padding: 10,height:100}}>
+      {isList?(
+        <View style={{justifyContent: "center",paddingVertical: 10}}>
+          <ActivityIndicator size="small" color="#0000ff" />
+          <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang tải ví dụ xin chờ giây lát':'Loading example please wait a moment'}</Text>
+        </View>
+            ):(
+              <View style={{backgroundColor:'white',padding: 10,height:100}}>
         <Text>{isVN?'Ví dụ':'For example'}</Text>
         <FlatList
               nestedScrollEnabled={true}
@@ -592,6 +607,8 @@ export default function Analytics() {
               scrollEnabled={true}
         />
       </View>
+            )}
+      
 
       <Keyboard 
         onPressMu={_onPressMu} 

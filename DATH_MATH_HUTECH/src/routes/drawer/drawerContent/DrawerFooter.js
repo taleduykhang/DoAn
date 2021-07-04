@@ -6,9 +6,7 @@ import {IconCog, IconSignOut} from '../../../resource/icons';
 
 class DrawerFooter extends React.PureComponent {
   onSettings = () => {
-    this.props.navigation.navigate('SettingScreen', {
-      title: 'Thông tin phần mềm',
-    });
+    this.props.navigation.navigate('SettingScreen');
   };
 
   onLogout = () => {

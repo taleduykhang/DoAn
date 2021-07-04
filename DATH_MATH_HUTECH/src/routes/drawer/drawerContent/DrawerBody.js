@@ -9,24 +9,16 @@ class DrawerBody extends React.PureComponent {
   };
 
   onGoToAnalytics = () => {
-    this.props.navigation.navigate('AnalyticsScreen', {
-      title: 'Đạo hàm',
-    });
+    this.props.navigation.navigate('AnalyticsScreen');
   };
   onGoToLinearAlgebra = () => {
-    this.props.navigation.navigate('LinearAlgebraScreen', {
-      title: 'Hệ phương trình',
-    });
+    this.props.navigation.navigate('LinearAlgebraScreen');
   };
   onGoToDiscreteMath = () => {
-    this.props.navigation.navigate('DiscreteMathScreen', {
-      title: 'Tổng hợp các bài toán',
-    });
+    this.props.navigation.navigate('DiscreteMathScreen');
   };
   onGoToMath = () => {
-    this.props.navigation.navigate('Math', {
-      title: 'Tổng hợp công thức',
-    });
+    this.props.navigation.navigate('Math');
   };
   render() {
     return (
