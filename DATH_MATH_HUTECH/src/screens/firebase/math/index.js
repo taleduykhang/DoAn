@@ -40,12 +40,12 @@ export default function Math ({navigation}) {
         </View>
         <View style={{flexDirection: 'row',padding:15,justifyContent:'space-around'}}>
             <TouchableOpacity onPress={_onPressTrigonometricFormula} style={{borderWidth:0.5,padding: 20, backgroundColor:'#9999ff',borderColor:'#9999ff',alignItems: 'center',width:'40%',borderRadius:10}}>
-                <Image source={require('../../../resource/images/maths_daoham.png')}/>
+                <Image source={require('../../../resource/images/trigonometric.png')}/>
                 <Text style={{color:'white',fontWeight:'bold',paddingTop: 10}}>LƯỢNG GIÁC</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={_onPressIntegralFormula} style={{borderWidth:0.5,padding: 20,backgroundColor:'#ffcccc',borderColor:'#ffcccc',alignItems: 'center',width:'40%',borderRadius:10}}>
-                <Image source={require('../../../resource/images/maths_tichphan.png')}/>
-                <Text style={{color:'white',fontWeight:'bold',paddingTop: 10}}>TÍCH PHÂN</Text>
+                <Image source={require('../../../resource/images/inequality.png')}/>
+                <Text style={{color:'white',fontWeight:'bold',paddingTop: 10}}>HẰNG ĐẲNG THỨC</Text>
             </TouchableOpacity>
         </View>
 

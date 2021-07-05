@@ -24,12 +24,6 @@ const {height: HEIGHT} = Dimensions.get('window');
 export default function trigonometricFormula () {
     
     
-    const [steps, setSteps] = useState([]);
-    const [math, setMath] = useState('');
-    const [visible, setVisible] = useState(false);
-    const [isLoad, setIsLoad] = useState(false);
-    
-    const [isKetQua, setIsKetQua] = useState(false);
     const [isList, setIsList] = useState(false);
 
     const [title1, setTitle1] = useState('');
@@ -43,12 +37,33 @@ export default function trigonometricFormula () {
     const [pi,setPi]=useState([]);
     const [titlePiDevide, setTitlePiDevide] = useState('');
     const [piDevide, setPiDevide] = useState([]);
+
+    const [title2, setTitle2] = useState('');
+    const [basic, setBasic] = useState([]);
+
+    const [title3, setTitle3] = useState('');
+    const [add, setAdd] = useState([]);
+
+    const [title4, setTitle4] = useState('');
+    const [titleDuplicate, setTitleDuplicate]  = useState('');
+    const [duplicate, setDuplicate] =  useState([]);
+    const [titleTriple, setTitleTriple]  = useState('');
+    const [triple, setTriple] =  useState([]);
+
+    const [title5, setTitle5] = useState('');
+    const [downgraded, setDowngraded] = useState([]);
+
+    const [title6, setTitle6] = useState('');
+    const [total, setTotal] = useState([]);
+
+    const [title7, setTitle7] = useState('');
+    const [volume, setVolume] = useState([]);
+
     useEffect(() =>{
         setIsList(true)
         db.ref('trigonometricFormula').on('value', querySnapShot => {
         const data = querySnapShot.val() ? querySnapShot.val() : {};
         //const todoItems = {...data};
-        setIsList(false)
         setTitle1(data.relatedBows.title)
 
         setTitleAgainst(data.relatedBows.against.title)
@@ -65,6 +80,30 @@ export default function trigonometricFormula () {
         
         setTitlePiDevide(data.relatedBows.piDivide.title)
         setPiDevide(data.relatedBows.piDivide.formula)
+
+        setTitle2(data.basicTrigonometry.title)
+        setBasic(data.basicTrigonometry.formula)
+
+        setTitle3(data.add.title)
+        setAdd(data.add.formula)
+
+        setTitle4(data.multiply.title)
+        
+        setTitleDuplicate(data.multiply.duplicated.title)
+        setDuplicate(data.multiply.duplicated.formula)
+
+        setTitleTriple(data.multiply.triple.title)
+        setTriple(data.multiply.triple.formula)
+
+        setTitle5(data.downgraded.title)
+        setDowngraded(data.downgraded.formula)
+
+        setTitle6(data.total.title)
+        setTotal(data.total.formula)
+
+        setTitle7(data.volume.title)
+        setVolume(data.volume.formula)
+        setIsList(false)
         });
         
     },[])
@@ -86,9 +125,15 @@ export default function trigonometricFormula () {
 
     return(
         
-        <View style={{flex:1}}>
-            <ScrollView style={{marginBottom:10}}>
-            <View style={{paddingTop:10,backgroundColor:'white'}}>
+        <View style={{flex:1,backgroundColor:'white'}}>
+            {isList?(
+                <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
+                        <ActivityIndicator size="small" color="#54CCB6" />
+                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang lấy danh sách xin chờ giây lát'}</Text>
+                        </View>
+            ):(
+                <ScrollView style={{marginBottom:10}}>
+            <View style={{paddingTop:10}}>
                 <Text style={{fontSize:24,fontWeight:'bold',padding:10}}>{title1}</Text>
                 <View style={{borderWidth:1,marginHorizontal:15,paddingLeft:20}}>
                     <MathText
@@ -130,7 +175,7 @@ export default function trigonometricFormula () {
                         keyExtractor={item => item.id}
                     />
                 </View>
-               
+
                 <View style={{borderLeftWidth:1,borderRightWidth:1,marginHorizontal:15,paddingLeft:20,borderBottomWidth:1}}>
                 <MathText
                     value={titlePi}
@@ -158,74 +203,105 @@ export default function trigonometricFormula () {
                         keyExtractor={item => item.id}
                     />
                     </View>
-                
-
                 </View>
-                
+                    
+                <View style={{paddingTop:10}}>
+                    <Text style={{fontSize:24,fontWeight:'bold',padding:10}}>{title2}</Text>
+                    <View style={{marginHorizontal:15,paddingLeft:20,borderWidth:1}}>
+                        <FlatList
+                                nestedScrollEnabled={true}
+                                scrollEnabled={true}
+                                data={basic}
+                                renderItem={_renderItem}
+                                keyExtractor={item => item.id}
+                            />
+                    </View>
+                </View>
+
+                <View style={{paddingTop:10}}>
+                    <Text style={{fontSize:24,fontWeight:'bold',padding:10}}>{title3}</Text>
+                    <View style={{marginHorizontal:15,paddingLeft:20,borderWidth:1}}>
+                        <FlatList
+                                nestedScrollEnabled={true}
+                                scrollEnabled={true}
+                                data={add}
+                                renderItem={_renderItem}
+                                keyExtractor={item => item.id}
+                            />
+                    </View>
+                </View>
+
+                <View style={{paddingTop:10}}>
+                    <Text style={{fontSize:24,fontWeight:'bold',padding:10}}>{title4}</Text>
+                    <View style={{marginHorizontal:15,paddingLeft:20,borderWidth:1}}>
+                            <MathText
+                            value={titleDuplicate}
+                            direction="ltr"
+                        />
+                        <FlatList
+                                nestedScrollEnabled={true}
+                                scrollEnabled={true}
+                                data={duplicate}
+                                renderItem={_renderItem}
+                                keyExtractor={item => item.id}
+                            />
+                    </View>
+                    <View style={{marginHorizontal:15,paddingLeft:20,borderRightWidth:1,borderBottomWidth:1,borderLeftWidth:1}}>
+                            <MathText
+                            value={titleTriple}
+                            direction="ltr"
+                        />
+                        <FlatList
+                                nestedScrollEnabled={true}
+                                scrollEnabled={true}
+                                data={triple}
+                                renderItem={_renderItem}
+                                keyExtractor={item => item.id}
+                            />
+                    </View>
+                </View>
+
+                <View style={{paddingTop:10}}>
+                    <Text style={{fontSize:24,fontWeight:'bold',padding:10}}>{title5}</Text>
+                    <View style={{marginHorizontal:15,paddingLeft:20,borderWidth:1}}>
+                        <FlatList
+                                nestedScrollEnabled={true}
+                                scrollEnabled={true}
+                                data={downgraded}
+                                renderItem={_renderItem}
+                                keyExtractor={item => item.id}
+                            />
+                    </View>
+                </View>
+
+                <View style={{paddingTop:10}}>
+                    <Text style={{fontSize:24,fontWeight:'bold',padding:10}}>{title6}</Text>
+                    <View style={{marginHorizontal:15,paddingLeft:20,borderWidth:1}}>
+                        <FlatList
+                                nestedScrollEnabled={true}
+                                scrollEnabled={true}
+                                data={total}
+                                renderItem={_renderItem}
+                                keyExtractor={item => item.id}
+                            />
+                    </View>
+                </View>
+
+                <View style={{paddingTop:10}}>
+                    <Text style={{fontSize:24,fontWeight:'bold',padding:10}}>{title7}</Text>
+                    <View style={{marginHorizontal:15,paddingLeft:20,borderWidth:1}}>
+                        <FlatList
+                                nestedScrollEnabled={true}
+                                scrollEnabled={true}
+                                data={volume}
+                                renderItem={_renderItem}
+                                keyExtractor={item => item.id}
+                            />
+                    </View>
+                </View>
             
             </ScrollView>
-            
-            {/* {isList?(
-                <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
-                        <ActivityIndicator size="small" color="#54CCB6" />
-                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang lấy danh sách xin chờ giây lát'}</Text>
-                        </View>
-            ):(
-                <FlatList
-                    nestedScrollEnabled={true}
-                    scrollEnabled={true}
-                    data={post}
-                    renderItem={_renderItemDerivative}
-                    keyExtractor={item => item.integral}
-                />
             )}
-            
-            <Modal visible={visible} onBackdropPress={onPressModal}>
-                <View style={styles.modalView}>
-                    <View style={{alignItems: 'center',backgroundColor:'#54CCB6',height:'10%',justifyContent: 'center', borderTopStartRadius:20, borderTopEndRadius:20}}>
-                        <Text style={{fontSize: 26, color: 'white',fontWeight:'bold'}}>{'Kết quả'}</Text>
-                    </View>
-                    <View style={{alignItems: 'center', borderBottomWidth:0.5,flexDirection: 'row'}}>
-                        <Text style={{marginLeft:15,paddingTop:3}}>{'Đạo hàm bài toán: '}</Text>
-                        <MathText
-                            value={'$$'+math+'$$'}
-                            direction="ltr"
-                        />
-                    </View>
-                    {isKetQua ? (
-                        <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
-                        <ActivityIndicator size="small" color="#54CCB6" />
-                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang lấy kết quả xin chờ giây lát'}</Text>
-                        </View>
-                        
-                    ):(
-                        <View style={{justifyContent: 'center',alignItems: 'center',borderBottomWidth:0.5}}>
-                        <Text style={{marginTop:15}}>{'Kết quả'}</Text>
-                        <MathText
-                            value={'$$'+ketQua+'$$'}
-                            direction="ltr"
-                        />
-                        </View>
-                    )}
-                    {
-                        isLoad ? (
-                            <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
-                        <ActivityIndicator size="small" color="#54CCB6" />
-                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang giải bài toán xin chờ giây lát'}</Text>
-                        </View>
-                        ) : (
-                            <FlatList
-                                        nestedScrollEnabled={true}
-                                        scrollEnabled={true}
-                                        data={steps}
-                                        renderItem={_renderItem}
-                                        keyExtractor={item => item.expression}
-                                    />
-                )
-            }
-                    
-                    </View>
-        </Modal> */}
         </View>
     )
 }
