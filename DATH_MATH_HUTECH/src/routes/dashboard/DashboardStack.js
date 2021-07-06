@@ -17,6 +17,7 @@ import Math from '../../screens/firebase/math'
 import derivativeFormula from '../../screens/firebase/math/derivativeFormula'
 import integralFormula from '../../screens/firebase/math/integralFormula'
 import trigonometricFormula from '../../screens/firebase/math/trigonometricFormula';
+import inequalityFormula from '../../screens/firebase/math/inequalityFormula'
 const Stack = createStackNavigator();
 
 export default DashboardStack = () => {
@@ -43,6 +44,7 @@ export default DashboardStack = () => {
       <Stack.Screen name="derivativeFormula" component={derivativeFormula} />
       <Stack.Screen name="integralFormula" component={integralFormula} />
       <Stack.Screen name="trigonometricFormula" component={trigonometricFormula} />
+      <Stack.Screen name="inequalityFormula" component={inequalityFormula} />
     </Stack.Navigator>
   );
 };

@@ -47,6 +47,17 @@ export default class Header extends React.PureComponent {
             <Text style={{color:'white',fontSize:22}}>Các công thức lượng giác</Text>
           </View>
         );
+        case 'inequalityFormula':
+        return (
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={{marginHorizontal: 15,marginTop:5}}
+              onPress={this.onGoBack}>
+              <IconArrowLeft size={18} color={'white'}/>
+            </TouchableOpacity>
+            <Text style={{color:'white',fontSize:22}}>Hằng đẳng thức đáng nhớ</Text>
+          </View>
+        );
         case 'SettingScreen':
         return (
           <View style={{flexDirection: 'row'}}>
