@@ -506,7 +506,7 @@ export default function Analytics(navigation) {
         return (
           <View style={{flex:1,marginTop: 5,backgroundColor:'white'}}>
             <View style={{alignItems: 'center',marginHorizontal:5}}>
-            <TouchableOpacity style={{borderWidth:0.5,height:50}} onPress={() => _onPressDerivative(item.derivative)}>
+            <TouchableOpacity style={{borderWidth:0.5,borderRadius:5,height:50}} onPress={() => _onPressDerivative(item.derivative)}>
             <MathText
                 value={'$$'+item.derivative+'$$'}
                 direction="ltr"
@@ -528,7 +528,7 @@ export default function Analytics(navigation) {
        
         <View style={{width:'100%',backgroundColor:'white',marginBottom:10,paddingHorizontal:20}}>
         <View style={{flexDirection: 'row',marginTop: 15,width:'100%'}}>
-            <TextInput value={baiToan}  style={styles.input} onChangeText={onChangeText} placeholder={isVN? 'Nhập phép toán đạo hàm':'Enter the derivative operation'}></TextInput>
+            <TextInput value={baiToan}  style={styles.input} onChangeText={onChangeText} placeholder={isVN? 'Nhập phép toán đạo hàm':'Enter the derivative operation'} keyboardType={'numeric'}></TextInput>
             <TouchableOpacity style = {{marginTop:10,marginLeft:-40,marginRight:15}} onPress = {onPressModalImage} >
               <IconGallery size={25} color={'#9999ff'}/>
             </TouchableOpacity>
