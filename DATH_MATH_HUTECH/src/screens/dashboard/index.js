@@ -24,13 +24,12 @@ import MathJax from 'react-native-mathjax'
 import axios from 'axios';
 import {IconCamera,IconSad,IconEqual,IconGallery,IconBar} from '../../resource/icons';
 import Modal from 'react-native-modal';
-// import { StaticMathField  } from 'react-mathquill'
 import MathView, { MathText } from 'react-native-math-view';
 const {width: WIDTH} = Dimensions.get('window');
 const {height: HEIGHT} = Dimensions.get('window');
-// import integral from '../Data'
 import Keyboard from '../components/keyboard'
 import {db} from '../firebase/configFirebase'
+import styles from './styles'
 export default function DashboardScreen({navigation}) {
   const [image, setImage] = useState();
   const [text, setText] = useState();
@@ -52,28 +51,7 @@ export default function DashboardScreen({navigation}) {
   const onChangeText = (text) => {
     setBaiToan(text);
   };
-  // const onOpenDrawer = () => {
-  //   navigation.openDrawer();
-  // };
-  // useLayoutEffect(() => {
-  //   navigation.setOptions({
-  //     title: '',
-  //     headerLeft: () => (
-  //       <View style={{flexDirection: 'row'}}>
-  //         <TouchableOpacity onPress={onOpenDrawer} style={{marginLeft:15,marginTop:5}}>
-  //             <IconBar size={22} color={'white'}/>
-  //         </TouchableOpacity>
-  //         <Text style={{color:'white',fontSize:24,paddingLeft: 20}}>Tích phân</Text>
-  //       </View>
-        
-  //     ),
-  //     headerBackTitle: ' ',
-  //     headerTintColor: 'white',
-  //     headerStyle: {
-  //       backgroundColor: '#54CCB6'
-  //     },
-  //   });
-  // });
+  
   useEffect(() =>{
     setIsList(true)
     db.ref('integralMath').on('value', querySnapShot => {
@@ -550,8 +528,8 @@ export default function DashboardScreen({navigation}) {
           style={styles.image}
         /> */}
        
-        <View style={{width:'100%',backgroundColor:'white',marginBottom:10,paddingHorizontal:20}}>
-        <View style={{flexDirection: 'row',marginTop: 30,width:'100%'}}>
+        <View style={styles.container}>
+        <View style={styles.containerTop}>
             <TextInput 
               value={baiToan}  
               style={styles.input} 
@@ -559,14 +537,14 @@ export default function DashboardScreen({navigation}) {
               placeholder={isVN? 'Nhập phép toán tích phân':'Enter the integral operation'} 
               keyboardType={'numeric'}>
               </TextInput>
-            <TouchableOpacity style = {{marginTop:10,marginLeft:-40,marginRight:15}} onPress = {onPressModalImage} >
+            <TouchableOpacity style = {styles.btnImage} onPress = {onPressModalImage} >
               <IconGallery size={25} color={'#9999ff'}/>
             </TouchableOpacity>
             <TouchableOpacity style = {styles.buttonResult} onPress={onPressMath}>
               <IconEqual size={30} color={'#ff7733'}/>
             </TouchableOpacity>
         </View>
-        <View style={{flexDirection: 'row',width:'100%',backgroundColor:'white',marginTop:10}}>
+        <View style={styles.containerCenter}>
           <Text style={{fontSize: 13, marginTop: 18}} >{isVN?'Bài toán: ':'Problem: '} </Text>
           <View>
             <MathText
@@ -621,12 +599,12 @@ export default function DashboardScreen({navigation}) {
         </View>) : null
       }
       {isList?(
-        <View style={{justifyContent: "center",paddingVertical: 10}}>
+        <View style={styles.exampleContainer}>
           <ActivityIndicator size="small" color="#0000ff" />
           <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang tải ví dụ xin chờ giây lát':'Loading example please wait a moment'}</Text>
         </View>
             ):(
-              <View style={{backgroundColor:'white',padding: 10,height:100}}>
+              <View View style = {styles.example}>
                 <Text>{isVN?'Ví dụ':'For example'}</Text>
                 <FlatList
                       nestedScrollEnabled={true}
@@ -669,7 +647,7 @@ export default function DashboardScreen({navigation}) {
       
       <Modal visible={visible} onBackdropPress={onPressModal}>
         <View style={styles.modalView}>
-          <View style={{alignItems: 'center',backgroundColor:'#54CCB6',height:'10%',justifyContent: 'center', borderTopStartRadius:20, borderTopEndRadius:20}}>
+          <View style={styles.modalResults}>
             <Text style={{fontSize: 26, color: 'white'}}>{isVN?'Các bước giải':'Solution steps'}</Text>
           </View>
           <FlatList
@@ -682,7 +660,7 @@ export default function DashboardScreen({navigation}) {
         </View>
       </Modal>
       <Modal visible={visibleImage} onBackdropPress={onPressModalImage}>
-          <View style = {{flexDirection: 'row',backgroundColor: "rgba(221, 247, 232, 1)",borderRadius: 20,height:150,margin: 40,justifyContent:'space-around',alignItems: 'center',borderWidth:0.5}}>
+          <View style = {styles.containerModalImage}>
             <TouchableOpacity style={styles.buttonCamera} onPress={onTakePhoto}>
               <IconCamera size={20} color={'black'}/>
             </TouchableOpacity>
@@ -696,95 +674,3 @@ export default function DashboardScreen({navigation}) {
 }
 
 
-
-const styles = StyleSheet.create({
-  screen: {
-    alignItems: 'center',
-    flex:1,
-  },
-  titleResult:{
-    fontSize: 23,
-    borderBottomWidth:1,
-    width:'100%',
-    textAlign:'center',
-    paddingBottom:15,
-    paddingTop:15
-  },
-  title: {
-    fontSize: 35,
-    marginVertical: 40,
-  },
-  image: {
-    height: 300,
-    width: 300,
-    marginTop: 30,
-    borderRadius: 10,
-  },
-  buttonCamera: {
-    width: 80,
-    height: 80,
-    backgroundColor: 'gray',
-    color: '#fff',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderRadius: 20,
-    borderWidth:0.5,
-    // marginRight: 10,
-  },
-  modalView: {
-    height:HEIGHT-50,
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 2,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 20
-  },
-  buttonGallery: {
-    width: 80,
-    height: 80,
-    backgroundColor: '#e6f2ff',
-    borderColor: '#333333',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    borderRadius: 20,
-    borderWidth:0.5
-  },
-  input: {
-    width: WIDTH-100,
-    height: 50,
-    borderRadius: 5,
-    fontSize: 14,
-    backgroundColor: 'white',
-    paddingLeft: 5,
-    borderColor: '#333333',
-    borderWidth:0.5
-  },
-  buttonResult:{
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width:50,
-    height:50,
-    marginLeft:10,
-    backgroundColor:'white',
-    borderRadius:20,
-    borderColor: '#333333',
-    borderWidth:0.5
-  },
-  buttonResultImage:{
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    width:30,
-    height:30,
-    marginLeft:10,
-    backgroundColor:'white',
-    borderRadius:10,
-    borderColor: '#333333',
-    borderWidth:0.5
-  }
-});
