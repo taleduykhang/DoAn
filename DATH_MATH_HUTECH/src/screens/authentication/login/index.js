@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity,Image} from 'react-native';
 import {withGlobalContext} from '../../../GlobalContextProvider';
-
+import styles from './styles'
 class LoginScreen extends React.Component {
   // componentDidUpdate(prevProps) {
   //   // if (
@@ -36,21 +36,16 @@ class LoginScreen extends React.Component {
 
   render() {
     return (
-      <View style={{flexGrow: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'white'}}>
+      <View style={styles.container}>
         <Image
           source={require('../../../resource/images/LogoHutech.png')}
-          style={{marginBottom:-50,}}
+          style={styles.logo}
         />
-        <Text style={{marginBottom:150,color:'#0074BD',fontSize:20}}>Chào mừng bạn đến với phần mềm giải toán</Text>
-        <TouchableOpacity style={{padding: 15,marginBottom:150,backgroundColor:'#54CCB6',borderRadius:30}} onPress={this.onPressLogin}>
-          <Text style={{fontSize:24,color:'white',fontWeight:'bold'}}>Bắt đầu</Text>
+        <Text style={styles.title}>Chào mừng bạn đến với phần mềm giải toán</Text>
+        <TouchableOpacity style={styles.btn} onPress={this.onPressLogin}>
+          <Text style={styles.text}>Bắt đầu</Text>
         </TouchableOpacity>
-        <Text style={{color:'rgba(142, 142, 142, 1)',fontSize:13}}>HKL-TEAM - Version 1.0.0</Text>
-        {/* <TouchableOpacity
-          style={{padding: 10}}
-          onPress={this.onPressResetPassword}>
-          <Text>Reset password</Text>
-        </TouchableOpacity> */}
+        <Text style={styles.versionName}>HKL-TEAM - Version 1.0.0</Text>
       </View>
     );
   }
