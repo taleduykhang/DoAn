@@ -485,7 +485,7 @@ export default function DashboardScreen({navigation}) {
   
     const _renderItem = ({item}) => {
         return (
-          <View style={{flex:1,marginTop: 30}}>
+          <View style={styles.containerSteps}>
             
             <View style={{paddingHorizontal:15}}>
                 <MathText
@@ -506,9 +506,9 @@ export default function DashboardScreen({navigation}) {
       }
       const _renderItemIntegral = ({item}) => {
         return (
-          <View style={{flex:1,marginTop: 5,backgroundColor:'white'}}>
-            <View style={{alignItems: 'center',marginHorizontal:5}}>
-            <TouchableOpacity style={{borderWidth:0.5,borderRadius:5,height:50}} onPress={() => _onPressIntegral(item.integral)}>
+          <View style={styles.containerExample}>
+            <View style={styles.positionExample}>
+            <TouchableOpacity style={styles.btnExample} onPress={() => _onPressIntegral(item.integral)}>
             <MathText
                 value={'$$'+item.integral+'$$'}
                 direction="ltr"
@@ -545,7 +545,7 @@ export default function DashboardScreen({navigation}) {
             </TouchableOpacity>
         </View>
         <View style={styles.containerCenter}>
-          <Text style={{fontSize: 13, marginTop: 18}} >{isVN?'Bài toán: ':'Problem: '} </Text>
+          <Text style={styles.mathText} >{isVN?'Bài toán: ':'Problem: '} </Text>
           <View>
             <MathText
                 value={'$$\\int{'+baiToan+'}  dx$$'}
@@ -554,10 +554,10 @@ export default function DashboardScreen({navigation}) {
           </View>
         </View>
         {isImage?(
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{paddingTop: 5,marginRight:10}}>{isVN?'Bài toán nhận được: ':'The problem gets: '} {text}</Text>
+            <View style={styles.row}>
+              <Text style={styles.problem}>{isVN?'Bài toán nhận được: ':'The problem gets: '} {text}</Text>
               <TouchableOpacity style = {{}} onPress={onPressMathImage}>
-                <Text style={{marginTop:5, color:'#ff7733',borderBottomWidth:1,borderColor:'#ff7733'}}>{isVN?'Giải':'Solution'} </Text>
+                <Text style={styles.solution}>{isVN?'Giải':'Solution'} </Text>
               </TouchableOpacity>
             </View>
           ):(null)}
@@ -566,7 +566,7 @@ export default function DashboardScreen({navigation}) {
         {isGiai? (
           <View style={{justifyContent:'space-between',width:'100%',paddingHorizontal:20,backgroundColor:'white',marginBottom:10}}>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{fontSize: 13, paddingTop: 18}} >{isVN?'Kết quả: ':'Result: '}</Text>
+                <Text style={styles.result} >{isVN?'Kết quả: ':'Result: '}</Text>
                 <View>
                   <MathText
                       value={ketQua}  
@@ -577,12 +577,12 @@ export default function DashboardScreen({navigation}) {
             <View style={{marginBottom:10}}>
               {isBuoc  ? (
                   <TouchableOpacity onPress={onPressModal}>
-                    <Text style={{fontSize: 13, color: 'rgba(0, 128, 255, 1)',borderBottomWidth:1,borderColor:'rgba(0, 128, 255, 1)',width:130}}>{isVN?'Xem các bước giải ...':'See the solution steps'}</Text>
+                    <Text style={styles.seeSteps}>{isVN?'Xem các bước giải ...':'See the solution steps'}</Text>
                   </TouchableOpacity>
                   
                 ):(
-                  <View style={{flexDirection: 'row'}}>
-                    <Text style={{fontSize: 13, color: '#ff7733'}}>{isVN?'Chưa có các bước giải cho bài toán này ':'There are no steps to solve this problem'}</Text>
+                  <View style={styles.row}>
+                    <Text style={styles.noSteps}>{isVN?'Chưa có các bước giải cho bài toán này ':'There are no steps to solve this problem'}</Text>
                     <IconSad size={13} color={'#ff7733'} style={{paddingTop:3}}/>
                   </View>
                 )
@@ -595,13 +595,13 @@ export default function DashboardScreen({navigation}) {
       {
         isLoad ? (<View style={{justifyContent: "center",paddingVertical: 10}}>
           <ActivityIndicator size="small" color="#0000ff" />
-          <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang giải bài toán xin chờ giây lát':'Solving the math problem, please wait a moment'}</Text>
+          <Text style={styles.loading}>{isVN?'Đang giải bài toán xin chờ giây lát':'Solving the math problem, please wait a moment'}</Text>
         </View>) : null
       }
       {isList?(
         <View style={styles.exampleContainer}>
           <ActivityIndicator size="small" color="#0000ff" />
-          <Text style={{fontSize: 13, color: '#0000ff'}}>{isVN?'Đang tải ví dụ xin chờ giây lát':'Loading example please wait a moment'}</Text>
+          <Text style={styles.loading}>{isVN?'Đang tải ví dụ xin chờ giây lát':'Loading example please wait a moment'}</Text>
         </View>
             ):(
               <View View style = {styles.example}>

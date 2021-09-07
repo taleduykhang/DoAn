@@ -110,6 +110,60 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderTopStartRadius: 20,
         borderTopEndRadius: 20
+    },
+    mathText: {
+        fontSize: 13,
+        marginTop: 18
+    },
+    loading: {
+        fontSize: 13,
+        color: '#0000ff'
+    },
+    noSteps: {
+        fontSize: 13,
+        color: '#ff7733'
+    },
+    row: {
+        flexDirection: 'row',
+    },
+    seeSteps: {
+        fontSize: 13,
+        color: 'rgba(0, 128, 255, 1)',
+        borderBottomWidth: 1,
+        borderColor: 'rgba(0, 128, 255, 1)',
+        width: 130
+    },
+    result: {
+        fontSize: 13,
+        paddingTop: 18
+    },
+    solution: {
+        marginTop: 5,
+        color: '#ff7733',
+        borderBottomWidth: 1,
+        borderColor: '#ff7733'
+    },
+    problem: {
+        paddingTop: 5,
+        marginRight: 10
+    },
+    containerExample: {
+        flex: 1,
+        marginTop: 5,
+        backgroundColor: 'white'
+    },
+    btnExample: {
+        borderWidth: 0.5,
+        borderRadius: 5,
+        height: 50
+    },
+    positionExample: {
+        alignItems: 'center',
+        marginHorizontal: 5
+    },
+    containerSteps: {
+        flex: 1,
+        marginTop: 30
     }
 });
 
