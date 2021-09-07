@@ -152,7 +152,7 @@ export default function derivativeFormula () {
             {isList?(
                 <View style={styles.containerLoading}>
                         <ActivityIndicator size="small" color="#54CCB6" />
-                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang lấy danh sách xin chờ giây lát'}</Text>
+                        <Text style={styles.textLoading}>{'Đang lấy danh sách xin chờ giây lát'}</Text>
                         </View>
             ):(
                 <FlatList
@@ -166,20 +166,20 @@ export default function derivativeFormula () {
             
             <Modal visible={visible} onBackdropPress={onPressModal}>
                 <View style={styles.modalView}>
-                    <View style={{alignItems: 'center',backgroundColor:'#54CCB6',height:'10%',justifyContent: 'center', borderTopStartRadius:20, borderTopEndRadius:20}}>
-                        <Text style={{fontSize: 26, color: 'white',fontWeight:'bold'}}>{'Kết quả'}</Text>
+                    <View style={styles.resultContainer}>
+                        <Text style={styles.textResults}>{'Kết quả'}</Text>
                     </View>
-                    <View style={{alignItems: 'center', borderBottomWidth:0.5,flexDirection: 'row'}}>
-                        <Text style={{marginLeft:15,paddingTop:3}}>{'Đạo hàm bài toán: '}</Text>
+                    <View style={styles.mathContainer}>
+                        <Text style={styles.textMath}>{'Đạo hàm bài toán: '}</Text>
                         <MathText
                             value={'$$'+math+'$$'}
                             direction="ltr"
                         />
                     </View>
                     {isKetQua ? (
-                        <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
+                        <View style={styles.loadingContainer}>
                         <ActivityIndicator size="small" color="#54CCB6" />
-                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang lấy kết quả xin chờ giây lát'}</Text>
+                        <Text style={styles.textLoading}>{'Đang lấy kết quả xin chờ giây lát'}</Text>
                         </View>
                         
                     ):(
@@ -193,9 +193,9 @@ export default function derivativeFormula () {
                     )}
                     {
                         isLoad ? (
-                            <View style={{ flex: 1,justifyContent: "center",backgroundColor:'white',alignItems: 'center'}}>
+                            <View style={styles.loadingContainer}>
                         <ActivityIndicator size="small" color="#54CCB6" />
-                        <Text style={{fontSize: 13, color: '#54CCB6'}}>{'Đang giải bài toán xin chờ giây lát'}</Text>
+                        <Text style={styles.textLoading}>{'Đang giải bài toán xin chờ giây lát'}</Text>
                         </View>
                         ) : (
                             <FlatList
